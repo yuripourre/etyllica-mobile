@@ -26,8 +26,8 @@ public class Example extends Application{
 	@Override
 	public void updateMouse(PointerEvent event) {
 
-		layer.setX(event.getX());
-		layer.setY(event.getY());
+		layer.setX(event.getX()-layer.getW()/2);
+		layer.setY(event.getY()-layer.getH()/2);
 		
 	}
 

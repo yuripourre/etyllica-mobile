@@ -3,6 +3,7 @@ package br.com.etyllica.core.video;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 public class Graphic {
 
@@ -22,6 +23,14 @@ public class Graphic {
 	
 	public void drawImage(Bitmap bitmap, int x, int y, Paint paint){
 		canvas.drawBitmap(bitmap, x, y, paint);
-	}	
+	}
+	
+	public void drawImage(Bitmap bitmap, int x, int y, int w, int h, int xImage, int yImage, Paint paint){
+		
+		Rect src = new Rect(xImage,yImage,xImage+w,yImage+h);
+		Rect dist = new Rect(x,y,x+w,y+h);
+		
+		canvas.drawBitmap(bitmap, src, dist, paint);
+	}
 
 }

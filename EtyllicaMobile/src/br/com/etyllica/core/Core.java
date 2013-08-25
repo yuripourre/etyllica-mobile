@@ -53,6 +53,7 @@ public class Core extends View{
 
 	public void setApplication(Application application) {
 		this.application = application;
+		this.application.load();
 	}
 		
 }

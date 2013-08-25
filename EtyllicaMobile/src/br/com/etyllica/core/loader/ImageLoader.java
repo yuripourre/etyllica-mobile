@@ -39,6 +39,14 @@ public class ImageLoader extends Loader{
 		this.assets = assets;
 	}
 
+	public Bitmap getTile(String path, int w, int h, int xImage, int yImage){
+		
+		Bitmap source = getImage(path);
+		
+		return Bitmap.createBitmap(source, xImage, yImage, w, h);				
+		
+	}
+	
 	public Bitmap getImage(String path){
 				
 		if(images.containsKey(path)){
