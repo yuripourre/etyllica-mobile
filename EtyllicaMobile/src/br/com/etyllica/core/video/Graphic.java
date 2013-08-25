@@ -22,6 +22,6 @@ public class Graphic {
 	
 	public void drawImage(Bitmap bitmap, int x, int y, Paint paint){
 		canvas.drawBitmap(bitmap, x, y, paint);
-	}
-		
+	}	
+
 }
