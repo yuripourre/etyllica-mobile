@@ -1,4 +1,4 @@
-etylica-mobile
+Etylica Mobile
 ==============
 
-Etyllica port to Android
+[Etyllica](http://github.com/yuripourre/etyllica) port to Android
