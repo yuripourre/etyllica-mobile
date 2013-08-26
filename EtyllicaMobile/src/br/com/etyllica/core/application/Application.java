@@ -5,7 +5,7 @@ import br.com.etyllica.core.video.Graphic;
 
 public abstract class Application {
 
-	protected Application returnApplication;
+	protected Application returnApplication = null;
 	
 	protected int loading = 0;
 	

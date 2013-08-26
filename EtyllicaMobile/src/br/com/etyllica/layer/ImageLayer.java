@@ -12,6 +12,10 @@ public class ImageLayer extends Layer {
 	
 	private int yImage = 0;
 	
+	public ImageLayer(String path){
+		this(0,0,path);
+	}
+	
 	public ImageLayer(int x, int y, String path){
 		super(x,y);
 		

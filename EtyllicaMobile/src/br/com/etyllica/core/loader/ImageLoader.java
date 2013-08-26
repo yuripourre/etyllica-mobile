@@ -5,18 +5,18 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 public class ImageLoader extends Loader{
-
-	private AssetManager assets;
+	
+	private String language = "";
 	
 	private static ImageLoader instance = null;
 	
 	private Map<String, Bitmap> images = new HashMap<String, Bitmap>();
-	
+		
 	private ImageLoader(){
 		super();
 		
@@ -30,13 +30,13 @@ public class ImageLoader extends Loader{
 
 		return instance;
 	}
-		
-	public AssetManager getAssets() {
-		return assets;
+	
+	public String getLanguage() {
+		return language;
 	}
 
-	public void setAssets(AssetManager assets) {
-		this.assets = assets;
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public Bitmap getTile(String path, int w, int h, int xImage, int yImage){
@@ -58,13 +58,28 @@ public class ImageLoader extends Loader{
 		
 	private Bitmap loadImage(String path){
 	
+		final String DIR = folder+path;
+		final String LANG_DIR = folder+language+"/"+path;
+		
 		InputStream inputStream;
+		
 		try {
-			inputStream = assets.open(folder+path);
-			Bitmap bmp = BitmapFactory.decodeStream(inputStream);
-	        inputStream.close();
-	        
-	        return bmp;
+						
+			if(assetExists(DIR)){
+				inputStream = assets.open(DIR);
+				Bitmap bmp = BitmapFactory.decodeStream(inputStream);
+		        inputStream.close();
+		        return bmp;
+			}else if(assetExists(LANG_DIR)){
+				
+				inputStream = assets.open(LANG_DIR);
+				Bitmap bmp = BitmapFactory.decodeStream(inputStream);
+		        inputStream.close();
+		        return bmp;
+			}else{
+				Log.w("", "File not found: "+LANG_DIR);
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,7 +88,5 @@ public class ImageLoader extends Loader{
 		return null;
 		
 	}
-	
-	
-	
+		
 }

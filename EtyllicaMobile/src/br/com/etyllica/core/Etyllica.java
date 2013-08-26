@@ -1,5 +1,7 @@
 package br.com.etyllica.core;
 
+import java.util.Locale;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Display;
@@ -13,22 +15,30 @@ public class Etyllica extends Activity {
 	
 	private int width;
 	private int height;
+	
+	protected boolean multilanguage = false;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
-		ImageLoader.getInstance().setAssets(getAssets());
-		
+										
 		Display display = getWindowManager().getDefaultDisplay();
 		
 		width = display.getWidth();
-		height = display.getHeight();		
+		height = display.getHeight();
+
+		ImageLoader.getInstance().setAssets(getAssets());
 		
 		core = new Core(this);
 		
 		startGame();
+				
+		if(multilanguage){
+			ImageLoader.getInstance().setLanguage(Locale.getDefault().getLanguage());
+		}
+		
+		core.init();
 		
 		setContentView(core);
 	}
