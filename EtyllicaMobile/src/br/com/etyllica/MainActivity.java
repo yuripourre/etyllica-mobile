@@ -11,6 +11,6 @@ public class MainActivity extends Etyllica {
 	@Override
 	public void startGame() {
 		setMainApplication(new Example());
-	}	
+	}
 	
 }
