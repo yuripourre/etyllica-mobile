@@ -5,7 +5,7 @@ import br.com.etyllica.core.Etyllica;
 public class MainActivity extends Etyllica {
 
 	public MainActivity(){
-		super();
+		super(800,480);
 	}
 	
 	@Override

@@ -18,9 +18,9 @@ public class Core extends View implements Runnable{
 	
 	private final int FPS = 50;
 
-	public Core(Context context) {
+	public Core(Context context, float xScale, float yScale) {
 		super(context);
-		graphic = new Graphic();
+		graphic = new Graphic(xScale, yScale);
 	}
 
 	@Override
