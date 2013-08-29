@@ -26,6 +26,22 @@ public class Graphic {
 	public void setCanvas(Canvas canvas) {
 		this.canvas = canvas;
 	}
+	
+	public float getxScale() {
+		return xScale;
+	}
+
+	public void setxScale(float xScale) {
+		this.xScale = xScale;
+	}
+
+	public float getyScale() {
+		return yScale;
+	}
+
+	public void setyScale(float yScale) {
+		this.yScale = yScale;
+	}
 
 	public void drawImage(Bitmap bitmap, int x, int y, Paint paint){
 		canvas.drawBitmap(bitmap, x, y, paint);

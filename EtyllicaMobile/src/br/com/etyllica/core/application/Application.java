@@ -20,5 +20,11 @@ public abstract class Application {
 	public void setReturnApplication(Application returnApplication) {
 		this.returnApplication = returnApplication;
 	}
-		
+	public int getLoading() {
+		return loading;
+	}
+	public void setLoading(int loading) {
+		this.loading = loading;
+	}
+			
 }

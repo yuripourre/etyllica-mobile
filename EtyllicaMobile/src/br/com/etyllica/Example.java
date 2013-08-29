@@ -30,7 +30,5 @@ public class Example extends Application{
 		layer.setY(event.getY()-layer.getH()/2);
 		
 	}
-
-	
 	
 }

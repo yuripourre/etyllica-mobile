@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.Window;
 import br.com.etyllica.core.application.Application;
