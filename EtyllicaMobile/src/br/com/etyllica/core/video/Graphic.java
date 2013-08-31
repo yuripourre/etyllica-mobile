@@ -44,7 +44,9 @@ public class Graphic {
 	}
 
 	public void drawImage(Bitmap bitmap, int x, int y, Paint paint){
-		canvas.drawBitmap(bitmap, x, y, paint);
+		
+		canvas.drawBitmap(bitmap, x*xScale, y*yScale, paint);
+		
 	}
 
 	public void drawImage(Bitmap bitmap, int x, int y, int w, int h, int xImage, int yImage, Paint paint){
@@ -57,7 +59,7 @@ public class Graphic {
 			canvas.drawBitmap(bitmap, src, dist, paint);
 		}else{
 			//Image Layer Ok
-			Rect src = new Rect(xImage,yImage,xImage+w,yImage+h);
+			Rect src = new Rect((int)(xImage*xScale),(int)(yImage*yScale),xImage+w,yImage+h);
 			Rect dist = new Rect(x,y,x+w,y+h);
 
 			canvas.drawBitmap(bitmap, src, dist, paint);	
