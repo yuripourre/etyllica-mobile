@@ -63,11 +63,8 @@ public class ImageLoader extends Loader{
 	public Bitmap getTile(String path, int w, int h, int xImage, int yImage){
 		
 		Bitmap source = getImage(path);
-		
-		Matrix matrix = new Matrix();
-	    matrix.postScale(xScale, yScale);
-		
-		return Bitmap.createBitmap(source, (int)(xImage*xScale), (int)(yImage*yScale), (int)(w*xScale), (int)(h*yScale), matrix, false);
+				
+		return Bitmap.createBitmap(source, (int)(xImage*xScale), (int)(yImage*yScale), (int)Math.ceil(w*xScale), (int)Math.ceil(h*yScale));
 		
 	}
 	
@@ -129,10 +126,6 @@ public class ImageLoader extends Loader{
 	}
 	
 	public Bitmap getResizedBitmap(Bitmap bmp) {
-		return getResizedBitmap(bmp,0,0);
-	}
-	
-	public Bitmap getResizedBitmap(Bitmap bmp, int xImage, int yImage) {
 				
 	    int width = bmp.getWidth();
 	    int height = bmp.getHeight();
@@ -140,7 +133,7 @@ public class ImageLoader extends Loader{
 	    Matrix matrix = new Matrix();
 	    matrix.postScale(xScale, yScale);
 
-	    Bitmap resizedBitmap = Bitmap.createBitmap(bmp, xImage, yImage, width, height, matrix, false);
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, false);
 	    return resizedBitmap;
 	}
 		
