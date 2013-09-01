@@ -12,12 +12,17 @@ import br.com.etyllica.core.loader.ImageLoader;
 public class Etyllica extends Activity {
 
 	private Core core;
-	
-	private int width;
-	private int height;
-	
+		
 	private int windowWidth;
 	private int windowHeight;
+	
+
+	protected int width;
+	protected int height;
+	
+	protected float xScale = 1;
+	protected float yScale = 1;
+	
 	private float density;
 	
 	protected boolean orientationHorizontal = true;
@@ -50,19 +55,15 @@ public class Etyllica extends Activity {
 		windowWidth = display.getWidth();
 		windowHeight = display.getHeight();
 		density = getResources().getDisplayMetrics().density;
-
 				
 		ImageLoader.getInstance().setAssets(getAssets());
 		
-		float xScale = 1;
-		float yScale = 1;
-		
 		if(orientationHorizontal){
-			xScale = (float)windowWidth/width;
-			yScale = (float)windowHeight/height;
+			xScale = (float)(windowWidth/width);
+			yScale = (float)(windowHeight/height);
 		}else{
-			xScale = (float)windowWidth/height;
-			yScale = (float)windowHeight/width;
+			xScale = (float)(windowWidth/height);
+			yScale = (float)(windowHeight/width);
 		}
 		
 		ImageLoader.getInstance().setxScale(xScale);

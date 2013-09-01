@@ -7,6 +7,10 @@ import br.com.etyllica.layer.ImageLayer;
 
 public class Example extends Application{
 	
+	public Example(int w, int h, float xScale, float yScale) {
+		super(w, h, xScale, yScale);
+	}
+
 	private ImageLayer layer = new ImageLayer(200, 50, "weka.png");
 	private ImageLayer layer2 = new ImageLayer(200, 150, "weka.png");
 	private ImageLayer layer3 = new ImageLayer(20, 150, "weka.png");

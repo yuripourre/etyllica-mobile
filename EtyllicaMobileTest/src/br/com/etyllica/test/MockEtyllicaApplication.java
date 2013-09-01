@@ -6,6 +6,14 @@ import br.com.etyllica.core.video.Graphic;
 
 public class MockEtyllicaApplication extends Application{
 
+	public MockEtyllicaApplication(int w, int h) {
+		super(w, h);
+	}
+	
+	public MockEtyllicaApplication(int w, int h, float xScale, float yScale) {
+		super(w, h, xScale, yScale);
+	}
+
 	@Override
 	public void draw(Graphic g) {
 		// TODO Auto-generated method stub

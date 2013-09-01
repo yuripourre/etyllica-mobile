@@ -15,7 +15,7 @@ public class CoreTest extends AndroidTestCase{
 		context = new EtyllicaContext(getContext());
 		
 		core = new Core(context, 2, 3);
-		core.setApplication(new MockEtyllicaApplication()); 
+		core.setApplication(new MockEtyllicaApplication(100,100)); 
 	}
 	
 	public void testCoreConstructorParams() {
