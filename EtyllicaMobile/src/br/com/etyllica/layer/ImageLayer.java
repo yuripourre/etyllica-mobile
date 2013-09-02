@@ -1,6 +1,7 @@
 package br.com.etyllica.layer;
 
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import br.com.etyllica.core.loader.ImageLoader;
 import br.com.etyllica.core.video.Graphic;
 
@@ -58,7 +59,16 @@ public class ImageLayer extends Layer {
 	}
 
 	public void draw(Graphic g){
-		g.drawImage(ImageLoader.getInstance().getImage(path), x, y, w, h, xImage, yImage, null);
+		
+		Paint paint = null;
+		
+		if(opacity!=255){
+			paint = new Paint();
+			paint.setAlpha(opacity);
+		}
+		
+		g.setMatrix(getMatrix());
+		g.drawBitmap(ImageLoader.getInstance().getImage(path), 0, 0, w, h, xImage, yImage, paint);
 	}
 	
 }

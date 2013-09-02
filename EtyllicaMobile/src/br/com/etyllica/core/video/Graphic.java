@@ -2,6 +2,7 @@ package br.com.etyllica.core.video;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -42,28 +43,41 @@ public class Graphic {
 	public void setyScale(float yScale) {
 		this.yScale = yScale;
 	}
-
-	public void drawImage(Bitmap bitmap, int x, int y, Paint paint){
-		
-		canvas.drawBitmap(bitmap, x*xScale, y*yScale, paint);
-		
+	
+	public void setMatrix(Matrix matrix){
+		canvas.setMatrix(matrix);
 	}
+		
+	public void drawBitmap(Bitmap bitmap, int x, int y, Paint paint){
+		canvas.drawBitmap(bitmap, x*xScale, y*yScale, paint);
+	}
+	
+	public void drawBitmap(Bitmap bitmap, int x, int y, int w, int h, int xImage, int yImage, Paint paint){
 
-	public void drawImage(Bitmap bitmap, int x, int y, int w, int h, int xImage, int yImage, Paint paint){
-
-		if(xScale==1&&yScale==1){			
+		if(xScale==1&&yScale==1){
 
 			Rect src = new Rect(xImage,yImage,xImage+w,yImage+h);
 			Rect dist = new Rect(x,y,x+w,y+h);
 
 			canvas.drawBitmap(bitmap, src, dist, paint);
+			
 		}else{
-			//Image Layer Ok
+			
 			Rect src = new Rect((int)(xImage*xScale),(int)(yImage*yScale),xImage+w,yImage+h);
 			Rect dist = new Rect(x,y,x+w,y+h);
 
-			canvas.drawBitmap(bitmap, src, dist, paint);	
+			canvas.drawBitmap(bitmap, src, dist, paint);
 		}
+		
+		resetMatrix();
+	}
+	
+	private void resetMatrix(){
+		
+		Matrix eye  = new Matrix();
+		eye.reset();
+		
+		canvas.setMatrix(eye);
 	}
 
 }
