@@ -1,9 +1,10 @@
 package br.com.etyllica;
+import br.com.etyllica.animation.scripts.HorizontalAnimationScript;
+import br.com.etyllica.animation.scripts.RotateAnimationScript;
 import br.com.etyllica.core.application.Application;
 import br.com.etyllica.core.input.mouse.PointerEvent;
 import br.com.etyllica.core.video.Graphic;
 import br.com.etyllica.layer.ImageLayer;
-
 
 public class Example extends Application{
 	
@@ -29,6 +30,15 @@ public class Example extends Application{
 		
 		layerTurn = new ImageLayer(100, 350, "weka.png");
 		layerTurn.setAngle(50);
+		
+		HorizontalAnimationScript horizontal = new HorizontalAnimationScript(layerGhost,5000);
+		horizontal.setInterval(200, 720);
+		this.animation.add(horizontal);
+		
+		RotateAnimationScript rotate = new RotateAnimationScript(1000,12000);
+		rotate.setTarget(layerTurn);
+		rotate.setInterval(0, 720);
+		this.animation.add(rotate);
 		
 		loading = 100;
 	}

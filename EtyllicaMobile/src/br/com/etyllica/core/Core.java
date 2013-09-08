@@ -15,7 +15,7 @@ public class Core extends View implements Runnable{
 	private Application application;
 	private Graphic graphic;
 	private Handler handler = new Handler();
-	
+		
 	private final int FPS = 50;
 
 	public Core(Context context, float xScale, float yScale) {
@@ -67,6 +67,8 @@ public class Core extends View implements Runnable{
 	@Override
 	public void run() {
 		
+		application.getAnimation().animate(getTimeNow());
+		
 		Application nextApplication = application.getReturnApplication();
 		
 		if(nextApplication!=null){
@@ -75,6 +77,10 @@ public class Core extends View implements Runnable{
 		}
 		
 		handler.postDelayed(this, 1000/FPS);
+	}
+	
+	public long getTimeNow(){
+		return System.currentTimeMillis();
 	}
 
 }

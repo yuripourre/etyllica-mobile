@@ -41,12 +41,12 @@ public class Layer implements DrawableComponent{
 	/**
 	 * Angle in degrees
 	 */
-	protected float angle = 0;
+	protected double angle = 0;
 
 	/**
 	 * Scale factor
 	 */
-	protected float scale = 1;
+	protected double scale = 1;
 
 	/**
 	 * if layer is visible
@@ -113,19 +113,19 @@ public class Layer implements DrawableComponent{
 		}
 	}
 
-	public float getAngle() {
+	public double getAngle() {
 		return angle;
 	}
 
-	public void setAngle(float angle) {
+	public void setAngle(double angle) {
 		this.angle = angle;
 	}
 
-	public float getScale() {
+	public double getScale() {
 		return scale;
 	}
 
-	public void setScale(float scale) {
+	public void setScale(double scale) {
 		this.scale = scale;
 	}
 
@@ -140,12 +140,12 @@ public class Layer implements DrawableComponent{
 	public Matrix getMatrix(){
 
 		Matrix matrix = new Matrix();
-		matrix.postRotate(angle);
+		matrix.postRotate((float)angle);
 		if(scale!=1){
-			matrix.postScale(scale, scale);
+			matrix.postScale((float)scale, (float)scale);
 			matrix.postTranslate(x-w/2, y-h/2);
 		}else{
-			matrix.postScale(scale, scale);
+			matrix.postScale((float)scale, (float)scale);
 			matrix.postTranslate(x, y);
 		}
 
