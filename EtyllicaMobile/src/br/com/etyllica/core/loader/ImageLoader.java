@@ -7,6 +7,8 @@ import java.util.Map;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.Matrix;
 import android.util.Log;
 
 public class ImageLoader extends Loader{
@@ -128,18 +130,20 @@ public class ImageLoader extends Loader{
 	
 	private Bitmap getResizedBitmap(InputStream inputStream) {
 
-		BitmapFactory.Options o = new BitmapFactory.Options();
-	    o.inJustDecodeBounds = true;
-	    BitmapFactory.decodeStream(inputStream, null, o);
+		Options options = new BitmapFactory.Options();
+	    options.inScaled = false;
 	    
-	    int width = (int)(o.outWidth*xScale);
-	    int height = (int)(o.outHeight*yScale);
+	    Bitmap bmp = BitmapFactory.decodeStream(inputStream, null, options);
 	    
-	    Bitmap bmp = BitmapFactory.decodeStream(inputStream);
+	    int width = bmp.getWidth();
+	    int height = bmp.getHeight();
 	    
 	    Log.d("IMAGELOADER", "width: "+width+" height:"+height);
 	    
-	    Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height);
+	    Matrix matrix = new Matrix();
+	    matrix.postScale(xScale, yScale);
+
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, true);
 	    return resizedBitmap;
 	}
 		
