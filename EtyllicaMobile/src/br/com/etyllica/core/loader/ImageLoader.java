@@ -7,7 +7,6 @@ import java.util.Map;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.util.Log;
 
 public class ImageLoader extends Loader{
@@ -98,7 +97,7 @@ public class ImageLoader extends Loader{
 				return loadBitmap(DEFAULT_LANG_DIR);
 		        
 			}else{				
-				Log.e("", "File not found: "+LANG_DIR);
+				Log.e("IMAGE_LOADER", "File not found: "+LANG_DIR);
 			}
 			
 		} catch (IOException e) {
@@ -114,10 +113,12 @@ public class ImageLoader extends Loader{
 		
 		InputStream inputStream = assets.open(path);
 		
-		Bitmap bmp = BitmapFactory.decodeStream(inputStream);
+	    Bitmap bmp = null;
 		
 		if(xScale!=1||yScale!=1){
-			bmp = getResizedBitmap(bmp);
+			bmp = getResizedBitmap(inputStream);
+		} else {
+			bmp = BitmapFactory.decodeStream(inputStream);	
 		}
 		
 		inputStream.close();
@@ -125,15 +126,20 @@ public class ImageLoader extends Loader{
         return bmp;		
 	}
 	
-	public Bitmap getResizedBitmap(Bitmap bmp) {
-				
-	    int width = bmp.getWidth();
-	    int height = bmp.getHeight();
-	    
-	    Matrix matrix = new Matrix();
-	    matrix.postScale(xScale, yScale);
+	private Bitmap getResizedBitmap(InputStream inputStream) {
 
-	    Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, false);
+		BitmapFactory.Options o = new BitmapFactory.Options();
+	    o.inJustDecodeBounds = true;
+	    BitmapFactory.decodeStream(inputStream, null, o);
+	    
+	    int width = (int)(o.outWidth*xScale);
+	    int height = (int)(o.outHeight*yScale);
+	    
+	    Bitmap bmp = BitmapFactory.decodeStream(inputStream);
+	    
+	    Log.d("IMAGELOADER", "width: "+width+" height:"+height);
+	    
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height);
 	    return resizedBitmap;
 	}
 		

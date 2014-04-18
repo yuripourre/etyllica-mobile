@@ -31,9 +31,16 @@ public class Example extends Application{
 		layerTurn = new ImageLayer(100, 350, "weka.png");
 		layerTurn.setAngle(50);
 		
-		HorizontalAnimationScript horizontal = new HorizontalAnimationScript(layerGhost,5000);
-		horizontal.setInterval(200, 720);
+		HorizontalAnimationScript horizontal = new HorizontalAnimationScript(layerGhost,10000);
+		horizontal.setInterval(200, 300);
+		horizontal.setEndless(true);
 		this.animation.add(horizontal);
+		
+		HorizontalAnimationScript invHorizontal = new HorizontalAnimationScript(layerGhost,5000);
+		invHorizontal.setInterval(300, 200);
+				
+		horizontal.setNext(invHorizontal);
+		
 		
 		RotateAnimationScript rotate = new RotateAnimationScript(1000,12000);
 		rotate.setTarget(layerTurn);

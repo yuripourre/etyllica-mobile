@@ -17,21 +17,21 @@ public class AnimationHandler {
 
 	private Map<AnimationScript, AnimationScript> endlessScripts = new HashMap<AnimationScript, AnimationScript>();
 
-	public AnimationHandler(){
+	public AnimationHandler() {
 		super();
 	}
 
-	public void animate(long now){
+	public void animate(long now) {
 
-		for(AnimationScript script: scripts){
+		for(AnimationScript script: scripts) {
 
-			if(!script.isStopped()){
+			if(!script.isStopped()) {
 				script.preAnimate(now);
 			}else{
 				//if stopped, use child (next script)
-				if(script.getNext()!=null){
+				if(script.getNext()!=null) {
 
-					if(script.isEndless()){
+					if(script.isEndless()) {
 						endlessScripts.put(lastScript(script),script);
 					}
 
@@ -41,7 +41,7 @@ public class AnimationHandler {
 				}else{
 
 					//If this script has some associated endless script
-					if(endlessScripts.containsKey(script)){
+					if(endlessScripts.containsKey(script)) {
 						//Find and restart the endless script
 						AnimationScript endless = endlessScripts.get(script);
 						restartEndless(endless);
@@ -51,7 +51,7 @@ public class AnimationHandler {
 					}else{
 
 						//If script is endless and don't have next
-						if(script.isEndless()){
+						if(script.isEndless()) {
 							script.restart();
 							nextScripts.add(script);
 						}
@@ -63,14 +63,14 @@ public class AnimationHandler {
 		}
 
 		//Remove marked Scripts
-		for(AnimationScript script: removeScripts){
+		for(AnimationScript script: removeScripts) {
 			scripts.remove(script);
 		}
 
 		removeScripts.clear();
 
 		//Add next Scripts
-		for(AnimationScript script: nextScripts){
+		for(AnimationScript script: nextScripts) {
 			scripts.add(script);
 		}
 
@@ -78,17 +78,17 @@ public class AnimationHandler {
 
 	}
 
-	public void add(AnimationScript script){
+	public void add(AnimationScript script) {
 		scripts.add(script);
 	}
 
-	private AnimationScript restartEndless(AnimationScript script){
+	private AnimationScript restartEndless(AnimationScript script) {
 
 		script.restart();
 
 		AnimationScript last = script;
 
-		if(script.getNext()!=null){
+		if(script.getNext()!=null) {
 			last = restartEndless(script.getNext()); 
 		}
 
@@ -96,11 +96,11 @@ public class AnimationHandler {
 
 	}
 
-	private AnimationScript lastScript(AnimationScript script){
+	private AnimationScript lastScript(AnimationScript script) {
 
 		AnimationScript last = script;
 
-		if(script.getNext()!=null){
+		if(script.getNext()!=null) {
 			last = lastScript(script.getNext()); 
 		}
 
