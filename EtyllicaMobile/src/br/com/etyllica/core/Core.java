@@ -3,47 +3,53 @@ package br.com.etyllica.core;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.os.Handler;
 import android.view.MotionEvent;
-import android.view.View;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import br.com.etyllica.core.application.Application;
 import br.com.etyllica.core.input.mouse.PointerEvent;
 import br.com.etyllica.core.video.Graphic;
 
-public class Core extends View implements Runnable{
-
+public class Core extends SurfaceView implements SurfaceHolder.Callback {
+	
 	private Application application;
 	private Graphic graphic;
-	private Handler handler = new Handler();
-		
-	private final int FPS = 50;
-
-	public Core(Context context, float xScale, float yScale) {
+	
+	private CoreThread thread;
+	
+    public Core(Context context, float xScale, float yScale) {
 		super(context);
-		graphic = new Graphic(xScale, yScale);
-	}
+        // adding the callback (this) to the surface holder to intercept events
+        getHolder().addCallback(this);
+        // create the game loop thread
+        thread = new CoreThread(getHolder(), this);
 
-	@Override
-	public void onDraw(Canvas canvas) {
+        graphic = new Graphic(xScale, yScale);
 
-		graphic.setCanvas(canvas);
-		canvas.drawColor(Color.WHITE);
+        // make the GamePanel focusable so it can handle events
+        setFocusable(true);
+    }
 
-		application.draw(graphic);
-	}
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width,
+            int height) {
+    }
 
-	@Override
-	public boolean onTouchEvent(MotionEvent me) {
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        // at this point the surface is created and
+        // we can safely start the game loop
+    	
+        thread.setRunning(true);
+        thread.start();
 
-		PointerEvent event = new PointerEvent((int)me.getX(), (int)me.getY(), me.getAction());
-		application.updateMouse(event);
+    }
 
-		// Schedules a repaint.
-		invalidate();
-		return true;
-	}
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+    }
 
-	public Graphic getGraphic() {
+    public Graphic getGraphic() {
 		return graphic;
 	}
 
@@ -58,29 +64,45 @@ public class Core extends View implements Runnable{
 	public void setApplication(Application application) {
 		this.application = application;
 	}
-	
+
 	public void init(){
 		this.application.load();
-		handler.post(this);
+
+		//handler.post(this);
+
 	}
 
-	@Override
-	public void run() {
+	public void update(long now) {
 		
-		application.getAnimation().animate(getTimeNow());
+		application.getAnimation().animate(now);
 		
 		Application nextApplication = application.getReturnApplication();
-		
+
 		if(nextApplication!=null){
 			nextApplication.load(); 
 			this.application = nextApplication;
-		}
-		
-		handler.postDelayed(this, 1000/FPS);
+		}			
+
 	}
-	
+
 	public long getTimeNow(){
 		return System.currentTimeMillis();
 	}
 
+	public void draw(Canvas canvas){
+		canvas.drawColor(Color.WHITE);
+		application.draw(graphic);
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent me) {
+
+		PointerEvent event = new PointerEvent((int)me.getX(), (int)me.getY(), me.getAction());
+		application.updateMouse(event);
+
+		// Schedules a repaint.
+		//invalidate();
+		return true;
+	}
+	
 }
