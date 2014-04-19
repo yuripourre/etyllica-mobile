@@ -11,27 +11,7 @@ import br.com.etyllica.core.video.Graphic;
  *
  */
 
-public class Layer implements Drawable{
-
-	/**
-	 * x position of a Layer
-	 */
-	protected int x = 0;
-
-	/**
-	 * y position of a Layer
-	 */
-	protected int y = 0;
-
-	/**
-	 * Layer's width
-	 */
-	protected int w = 0;
-
-	/**
-	 * Layer's height
-	 */
-	protected int h = 0;
+public class Layer extends GeometricLayer implements Drawable{
 
 	/**
 	 * Opacity
@@ -54,51 +34,13 @@ public class Layer implements Drawable{
 	protected boolean visible = true;
 
 	public Layer(int x, int y) {
-		super();
-		this.x = x;
-		this.y = y;
+		super(x, y);
 	}
 
 	public Layer(int x, int y, int w, int h) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
+		super(x,y,w,h);
 	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getW() {
-		return w;
-	}
-
-	public void setW(int w) {
-		this.w = w;
-	}
-
-	public int getH() {
-		return h;
-	}
-
-	public void setH(int h) {
-		this.h = h;
-	}
-
+	
 	public int getOpacity() {
 		return opacity;
 	}
