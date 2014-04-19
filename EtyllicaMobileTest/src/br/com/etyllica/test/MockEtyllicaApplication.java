@@ -10,10 +10,6 @@ public class MockEtyllicaApplication extends Application{
 		super(w, h);
 	}
 	
-	public MockEtyllicaApplication(int w, int h, float xScale, float yScale) {
-		super(w, h, xScale, yScale);
-	}
-
 	@Override
 	public void draw(Graphic g) {
 		// TODO Auto-generated method stub

@@ -2,6 +2,7 @@ package br.com.etyllica.test.core;
 
 import android.content.Context;
 import android.test.AndroidTestCase;
+import br.com.etyllica.core.Configuration;
 import br.com.etyllica.core.Core;
 import br.com.etyllica.test.EtyllicaContext;
 import br.com.etyllica.test.MockEtyllicaApplication;
@@ -14,7 +15,10 @@ public class CoreTest extends AndroidTestCase{
 	public void setUp(){
 		context = new EtyllicaContext(getContext());
 		
-		core = new Core(context, 2, 3);
+		Configuration.getInstance().setScaleX(2);
+		Configuration.getInstance().setScaleY(3);
+		
+		core = new Core(context);
 		core.setApplication(new MockEtyllicaApplication(100,100)); 
 	}
 	

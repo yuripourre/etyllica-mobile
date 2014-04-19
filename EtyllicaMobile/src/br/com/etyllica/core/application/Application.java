@@ -10,10 +10,6 @@ public abstract class Application {
 	
 	protected int h;
 	
-	protected float xScale = 1;
-	
-	protected float yScale = 1;
-
 	protected int loading = 0;
 	
 	protected Application returnApplication = null;
@@ -27,17 +23,10 @@ public abstract class Application {
 		this.h = h;
 	}
 	
-	public Application(int w, int h, float xScale, float yScale){
-		super();
-		
-		this.w = w;
-		this.h = h;
-		this.xScale = xScale;
-		this.yScale = yScale;
-	}
-	
 	public abstract void draw(Graphic g);
+	
 	public abstract void load();
+	
 	public abstract void updateMouse(PointerEvent event);
 	
 	public Application getReturnApplication() {
