@@ -18,7 +18,7 @@ public class Configuration {
 
 	private LanguageAdapter adapter = new LanguageAdapter();
 	
-	private Locale locale;
+	private Locale locale = null;
 	
 	private Language language = Language.ENGLISH_USA;
 	
@@ -64,5 +64,9 @@ public class Configuration {
 		
 		this.language = adapter.getLanguage(locale.getLanguage());
 	}
-	
+
+	public Locale getLocale() {
+		return locale;
+	}
+		
 }
