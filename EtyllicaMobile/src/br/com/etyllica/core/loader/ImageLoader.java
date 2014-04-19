@@ -62,20 +62,22 @@ public class ImageLoader extends Loader {
 		final String DIR = folder+path;
 		final String LANG_DIR = folder+language+"/"+path;
 		final String DEFAULT_LANG_DIR = folder+defaultLanguage+"/"+path;
-				
+			
+		Bitmap bitmap = null;
+		
 		try {
 						
 			if(assetExists(DIR)) {
 				
-				return loadBitmap(DIR);
+				bitmap = loadBitmap(DIR);
 				
 			}else if(assetExists(LANG_DIR)) {
 				
-				return loadBitmap(LANG_DIR);
+				bitmap = loadBitmap(LANG_DIR);
 				
 			}else if(assetExists(DEFAULT_LANG_DIR)) {
 		        
-				return loadBitmap(DEFAULT_LANG_DIR);
+				bitmap = loadBitmap(DEFAULT_LANG_DIR);
 		        
 			}else{				
 				Log.e("IMAGE_LOADER", "File not found: "+LANG_DIR);
@@ -85,8 +87,8 @@ public class ImageLoader extends Loader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return null;
+				
+		return bitmap;
 		
 	}
 	

@@ -25,7 +25,7 @@ public class TileLayer extends ImageLayer{
 			paint.setAlpha(opacity);
 		}
 		
-		g.drawBitmap(tile, x, y, paint);
+		g.drawBitmap(tile, 0, 0, w, h, 0, 0, paint);
 	}
 
 }

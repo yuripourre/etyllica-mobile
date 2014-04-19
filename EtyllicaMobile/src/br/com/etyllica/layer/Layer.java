@@ -1,6 +1,7 @@
 package br.com.etyllica.layer;
 
 import android.graphics.Matrix;
+import br.com.etyllica.core.Configuration;
 import br.com.etyllica.core.Drawable;
 import br.com.etyllica.core.graphics.Graphic;
 
@@ -83,12 +84,15 @@ public class Layer extends GeometricLayer implements Drawable{
 
 		Matrix matrix = new Matrix();
 		matrix.postRotate((float)angle);
-		if(scale!=1){
+		
+		float xScale = Configuration.getInstance().getScaleX();
+		float yScale = Configuration.getInstance().getScaleY();
+				
+		if(scale!=1) {
 			matrix.postScale((float)scale, (float)scale);
-			matrix.postTranslate(x-w/2, y-h/2);
-		}else{
-			matrix.postScale((float)scale, (float)scale);
-			matrix.postTranslate(x, y);
+			matrix.postTranslate(x*xScale-(w*xScale)/2, y*yScale-h*yScale/2);
+		} else {
+			matrix.postTranslate(x*xScale, y*yScale);
 		}
 
 		return matrix;

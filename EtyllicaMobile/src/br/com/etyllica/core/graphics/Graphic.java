@@ -54,11 +54,7 @@ public class Graphic {
 	public void setyScale(float yScale) {
 		this.yScale = yScale;
 	}
-			
-	public void drawBitmap(Bitmap bitmap, int x, int y, Paint paint) {
-		canvas.drawBitmap(bitmap, x*xScale, y*yScale, paint);
-	}
-	
+
 	public void drawBitmap(Bitmap bitmap, int x, int y, int w, int h, int xImage, int yImage, Paint paint) {
 
 		if(xScale==1 && yScale==1) {
@@ -70,8 +66,11 @@ public class Graphic {
 			
 		} else {
 			
-			Rect src = new Rect((int)(xImage*xScale),(int)(yImage*yScale),xImage+w,yImage+h);
-			Rect dist = new Rect(x,y,x+w,y+h);
+			float cw = w*xScale;
+			float ch = h*yScale;
+			
+			Rect src = new Rect((int)(xImage*xScale),(int)(yImage*yScale),(int)(xImage+cw),(int)(yImage+ch));
+			RectF dist = new RectF(x, y, x+cw, y+ch);
 
 			canvas.drawBitmap(bitmap, src, dist, paint);
 		}

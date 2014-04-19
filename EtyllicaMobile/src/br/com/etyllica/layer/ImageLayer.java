@@ -2,6 +2,7 @@ package br.com.etyllica.layer;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import br.com.etyllica.core.Configuration;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.ImageLoader;
 
@@ -21,15 +22,24 @@ public class ImageLayer extends Layer {
 		super(x,y);
 		
 		this.path = path;
+		
 		Bitmap bitmap = ImageLoader.getInstance().getImage(path);
-		this.w = bitmap.getWidth();
-		this.h = bitmap.getHeight();
+		
+		float xScale = Configuration.getInstance().getScaleX();
+		float yScale = Configuration.getInstance().getScaleY();
+		
+		//Set the Original Size		
+		this.w = (int)(bitmap.getWidth()/xScale);
+		this.h = (int)(bitmap.getHeight()/yScale);
+		
+		//this.w = bitmap.getWidth();
+		//this.h = bitmap.getHeight();
 		
 	}
 	
-	public ImageLayer(int x, int y,int w, int h, String path){
+	public ImageLayer(int x, int y, int w, int h, String path){
 		super(x,y,w,h);
-		
+				
 		this.path = path;
 	}
 	
@@ -68,6 +78,7 @@ public class ImageLayer extends Layer {
 		}
 		
 		g.setMatrix(getMatrix());
+		
 		g.drawBitmap(ImageLoader.getInstance().getImage(path), 0, 0, w, h, xImage, yImage, paint);
 	}
 	
