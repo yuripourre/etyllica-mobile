@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,18 +30,6 @@ public abstract class EtyllicaMobile extends Activity {
 	private float density;
 
 	protected boolean orientationHorizontal = true;
-
-	protected boolean multilanguage = false;
-	//cs
-	//de(utch)
-	//en(glish)
-	//es(panol)
-	//fr(ench)
-	//it(alia)
-	//ko(rean)
-	//ja(pan)
-	//ru(ssian)
-	//pt
 
 	public EtyllicaMobile(int width, int height) {
 		super();
@@ -80,8 +67,8 @@ public abstract class EtyllicaMobile extends Activity {
 			yScale = (float)windowHeight/(float)width;
 		}
 
-		ImageLoader.getInstance().setxScale(xScale);
-		ImageLoader.getInstance().setyScale(yScale);
+		Configuration.getInstance().setScaleX(xScale);
+		Configuration.getInstance().setScaleY(yScale);
 
 	}
 
@@ -95,6 +82,8 @@ public abstract class EtyllicaMobile extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		computeSize();
+		
+		Configuration.getInstance().setLocale(Locale.getDefault());
 
 		ImageLoader.getInstance().setAssets(getAssets());
 
@@ -107,9 +96,6 @@ public abstract class EtyllicaMobile extends Activity {
 
 		startGame();
 
-		if(multilanguage){
-			ImageLoader.getInstance().setLanguage(Locale.getDefault().getLanguage());			
-		}
 
 		core.init();
 
@@ -117,7 +103,7 @@ public abstract class EtyllicaMobile extends Activity {
 	}
 
 	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
+	public void onConfigurationChanged(android.content.res.Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 	}
 
