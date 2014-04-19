@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 public class Graphic {
 
@@ -119,14 +120,14 @@ public class Graphic {
 		
 		setDrawStyle();
 				
-		canvas.drawRect(x, y, x+w, y+h, paint);
+		drawCanvasRect(x,y,w,h);
 	}
 	
 	public void fillRect(int x, int y, int w, int h) {
 		
 		setFillStyle();
 		
-		canvas.drawRect(x, y, x+w, y+h, paint);		
+		drawCanvasRect(x,y,w,h);
 	}
 	
 	private void setFillStyle() {
@@ -147,4 +148,21 @@ public class Graphic {
 		
 	}
 	
+	private void drawCanvasRect(int x, int y, int w, int h) {
+		
+		RectF rect = getScaledRect(x, y, w, h);
+		
+		canvas.drawRect(rect, paint);
+	}
+	
+	private RectF getScaledRect(int x, int y, int w, int h) {
+		
+		float cx = x*xScale;
+		float cy = y*yScale;
+		float cw = cx+w*xScale;
+		float ch = cy+h*yScale;
+		
+		return new RectF(cx, cy, cw, ch);
+		
+	}
 }
