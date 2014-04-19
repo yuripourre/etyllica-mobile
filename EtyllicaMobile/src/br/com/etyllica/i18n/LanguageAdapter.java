@@ -1,5 +1,6 @@
 package br.com.etyllica.i18n;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class LanguageAdapter {
@@ -8,6 +9,8 @@ public class LanguageAdapter {
 	
 	public LanguageAdapter() {
 		super();
+		
+		languages = new HashMap<String, Language>();
 		
 		languages.put("en", Language.ENGLISH_USA);
 		languages.put("pt", Language.PORTUGUESE_BRAZIL);
