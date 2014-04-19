@@ -2,8 +2,8 @@ package br.com.etyllica.layer;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.ImageLoader;
-import br.com.etyllica.core.video.Graphic;
 import br.com.etyllica.layer.ImageLayer;
 
 public class TileLayer extends ImageLayer{

@@ -1,8 +1,8 @@
 package br.com.etyllica.core.application;
 
 import br.com.etyllica.animation.AnimationHandler;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.PointerEvent;
-import br.com.etyllica.core.video.Graphic;
 
 public abstract class Application {
 	

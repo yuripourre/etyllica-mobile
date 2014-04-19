@@ -1,8 +1,8 @@
 package br.com.etyllica.test;
 
 import br.com.etyllica.core.application.Application;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.PointerEvent;
-import br.com.etyllica.core.video.Graphic;
 
 public class MockEtyllicaApplication extends Application{
 

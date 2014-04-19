@@ -1,4 +1,4 @@
-package br.com.etyllica.core.video;
+package br.com.etyllica.core.graphics;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -17,6 +17,8 @@ public class Graphic {
 	private float yScale = 1;
 	
 	private boolean antiAlias = true;
+	
+	private int alpha = 255;
 
 	public Graphic(float xScale, float yScale) {
 		super();		
@@ -95,7 +97,7 @@ public class Graphic {
 		paint.setAntiAlias(antiAlias);
 	}
 	
-	public void setColor(br.com.etyllica.core.video.Color color) {
+	public void setColor(br.com.etyllica.core.graphics.Color color) {
 		this.setColor(color.getRed(), color.getGreen(), color.getBlue());
 	}
 	
@@ -104,29 +106,44 @@ public class Graphic {
 	}
 	
 	public void setOpacity(int opacity) {
-		paint.setAlpha(opacity);
+		
+		alpha = opacity;
 	}
 	
 	public void setAlpha(int percent) {
 
-		int alpha = (int)((float)percent*255/100);
-	
-		paint.setAlpha(alpha);
-		
+		alpha = (int)((float)percent*255/100);			
 	}
 	
 	public void drawRect(int x, int y, int w, int h) {
 		
-		paint.setStyle(Paint.Style.STROKE);
-		
+		setDrawStyle();
+				
 		canvas.drawRect(x, y, x+w, y+h, paint);
 	}
 	
 	public void fillRect(int x, int y, int w, int h) {
 		
+		setFillStyle();
+		
+		canvas.drawRect(x, y, x+w, y+h, paint);		
+	}
+	
+	private void setFillStyle() {
+		
 		paint.setStyle(Paint.Style.FILL);
 		
-		canvas.drawRect(x, y, x+w, y+h, paint);
+		if(alpha!=255)
+			paint.setAlpha(alpha);
+		
+	}
+	
+	private void setDrawStyle() {
+		
+		paint.setStyle(Paint.Style.STROKE);
+		
+		if(alpha!=255)
+			paint.setAlpha(alpha);
 		
 	}
 	
