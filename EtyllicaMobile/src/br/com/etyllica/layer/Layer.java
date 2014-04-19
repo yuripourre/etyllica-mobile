@@ -1,7 +1,7 @@
 package br.com.etyllica.layer;
 
 import android.graphics.Matrix;
-import br.com.etyllica.core.DrawableComponent;
+import br.com.etyllica.core.Drawable;
 import br.com.etyllica.core.video.Graphic;
 
 /**
@@ -11,7 +11,7 @@ import br.com.etyllica.core.video.Graphic;
  *
  */
 
-public class Layer implements DrawableComponent{
+public class Layer implements Drawable{
 
 	/**
 	 * x position of a Layer

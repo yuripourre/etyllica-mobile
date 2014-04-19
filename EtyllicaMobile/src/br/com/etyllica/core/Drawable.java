@@ -9,7 +9,7 @@ import br.com.etyllica.core.video.Graphic;
  *
  */
 
-public interface DrawableComponent {
+public interface Drawable {
 
 	/**
 	 * 
