@@ -88,12 +88,15 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 
 	}
 
-	public long getTimeNow(){
+	public long getTimeNow() {
+				
 		return System.currentTimeMillis();
 	}
 
-	public void draw(Canvas canvas){
+	public void draw(Canvas canvas) {
+		
 		canvas.drawColor(Color.WHITE);
+		
 		application.draw(graphic);
 	}
 
