@@ -17,14 +17,17 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private CoreThread thread;
 	
-    public Core(Context context, float xScale, float yScale) {
+    public Core(Context context) {
 		super(context);
         // adding the callback (this) to the surface holder to intercept events
         getHolder().addCallback(this);
         // create the game loop thread
         thread = new CoreThread(getHolder(), this);
 
-        graphic = new Graphic(xScale, yScale);
+        float scaleX = Configuration.getInstance().getScaleX();
+        float scaleY = Configuration.getInstance().getScaleY();
+        
+        graphic = new Graphic(scaleX, scaleY);
 
         // make the GamePanel focusable so it can handle events
         setFocusable(true);

@@ -21,20 +21,15 @@ public abstract class EtyllicaMobile extends Activity {
 	private int windowWidth;
 	private int windowHeight;
 
-	protected int width = 1;
-	protected int height = 1;
-
-	protected float xScale = 1;
-	protected float yScale = 1;
-
-	private float density;
+	protected int w = 1;
+	protected int h = 1;
 
 	protected boolean orientationHorizontal = true;
 
 	public EtyllicaMobile(int width, int height) {
 		super();
-		this.width = width;
-		this.height = height;
+		this.w = width;
+		this.h = height;
 	}
 
 	private Point getDisplaySize(final Display display) {
@@ -54,17 +49,21 @@ public abstract class EtyllicaMobile extends Activity {
 	private void computeSize() {
 
 		Display display = getWindowManager().getDefaultDisplay();
+		
 		Point size = getDisplaySize(display);
 
 		windowWidth = size.x;
 		windowHeight = size.y;
 
+		float xScale = 1;
+		float yScale = 1;
+		
 		if(orientationHorizontal) {
-			xScale = (float)windowWidth/(float)width;
-			yScale = (float)windowHeight/(float)height;
+			xScale = (float)windowWidth/(float)w;
+			yScale = (float)windowHeight/(float)h;
 		}else{
-			xScale = (float)windowWidth/(float)height;
-			yScale = (float)windowHeight/(float)width;
+			xScale = (float)windowWidth/(float)h;
+			yScale = (float)windowHeight/(float)w;
 		}
 
 		Configuration.getInstance().setScaleX(xScale);
@@ -87,15 +86,13 @@ public abstract class EtyllicaMobile extends Activity {
 
 		ImageLoader.getInstance().setAssets(getAssets());
 
-		Log.d("MOBILE INIT", "Screen Width: "+windowWidth+" "+width);
+		Log.d("MOBILE INIT", "Screen Width: "+windowWidth+" "+w);
 
-		Log.d("MOBILE INIT", "Screen Height: "+windowHeight+" "+height);
+		Log.d("MOBILE INIT", "Screen Height: "+windowHeight+" "+h);
 
-
-		core = new Core(this, xScale, yScale);
+		core = new Core(this);
 
 		startGame();
-
 
 		core.init();
 
