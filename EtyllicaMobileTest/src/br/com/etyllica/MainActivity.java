@@ -5,13 +5,13 @@ import br.com.etyllica.core.application.Application;
 
 public class MainActivity extends EtyllicaMobile {
 
-	public MainActivity(){
+	public MainActivity() {
 		super(800,480);
 	}
 	
 	@Override
 	public Application startApplication() {
-		return new Example(width,height,xScale,yScale);
+		return new Example(w, h);
 	}
 	
 }

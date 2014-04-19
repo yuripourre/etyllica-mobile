@@ -8,8 +8,8 @@ import br.com.etyllica.layer.ImageLayer;
 
 public class Example extends Application{
 	
-	public Example(int w, int h, float xScale, float yScale) {
-		super(w, h, xScale, yScale);
+	public Example(int w, int h) {
+		super(w, h);
 	}
 
 	private ImageLayer layer;
