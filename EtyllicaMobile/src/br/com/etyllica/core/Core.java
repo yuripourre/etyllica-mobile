@@ -17,6 +17,9 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private CoreThread thread;
 	
+	float scaleX = 1;
+    float scaleY = 1;
+	
     public Core(Context context) {
 		super(context);
         // adding the callback (this) to the surface holder to intercept events
@@ -24,8 +27,8 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
         // create the game loop thread
         thread = new CoreThread(getHolder(), this);
 
-        float scaleX = Configuration.getInstance().getScaleX();
-        float scaleY = Configuration.getInstance().getScaleY();
+        scaleX = Configuration.getInstance().getScaleX();
+        scaleY = Configuration.getInstance().getScaleY();
         
         graphic = new Graphic(scaleX, scaleY);
 
@@ -103,7 +106,7 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	@Override
 	public boolean onTouchEvent(MotionEvent me) {
 
-		PointerEvent event = new PointerEvent((int)me.getX(), (int)me.getY(), me.getAction());
+		PointerEvent event = new PointerEvent((int)(me.getX()/scaleX), (int)(me.getY()/scaleY), me.getAction());
 		application.updateMouse(event);
 
 		// Schedules a repaint.
