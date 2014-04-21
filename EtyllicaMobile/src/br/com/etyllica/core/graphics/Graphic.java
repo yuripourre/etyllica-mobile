@@ -119,6 +119,14 @@ public class Graphic {
 		this.write(x, y, text);
 	}
 	
+	public void drawString(int x, int y, int w, int h, String text) {
+		
+		Rect bounds = new Rect();
+		
+		paint.getTextBounds(text, 0, text.length(), bounds);	
+		canvas.drawText(text, (x+w/2+(bounds.left-bounds.right)/2)*xScale, (y+h/2+(bounds.bottom-bounds.top)/2)*yScale, paint);
+	}
+	
 	public void write(int x, int y, String text) {
 		canvas.drawText(text, x*xScale, y*yScale, paint); 
 	}
