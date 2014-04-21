@@ -12,7 +12,7 @@ import br.com.etyllica.core.graphics.Graphic;
  *
  */
 
-public class Layer extends GeometricLayer implements Drawable{
+public class Layer extends GeometricLayer implements Drawable {
 
 	/**
 	 * Opacity
