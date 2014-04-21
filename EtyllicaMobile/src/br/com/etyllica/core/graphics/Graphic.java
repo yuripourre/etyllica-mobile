@@ -115,6 +115,18 @@ public class Graphic {
 		alpha = (int)((float)percent*255/100);			
 	}
 	
+	public void drawString(String text, int x, int y) {
+		this.write(x, y, text);
+	}
+	
+	public void write(int x, int y, String text) {
+		canvas.drawText(text, x*xScale, y*yScale, paint); 
+	}
+	
+	public void setFontSize(float size) {
+		paint.setTextSize(size*yScale);
+	}
+	
 	public void drawRect(int x, int y, int w, int h) {
 		
 		setDrawStyle();
@@ -164,4 +176,5 @@ public class Graphic {
 		return new RectF(cx, cy, cw, ch);
 		
 	}
+	
 }
