@@ -6,9 +6,8 @@ import br.com.etyllica.core.graphics.Color;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.PointerEvent;
 import br.com.etyllica.gui.label.Label;
-import br.com.etyllica.layer.Layer;
 
-public class Button extends Layer implements Drawable {
+public class Button extends View implements Drawable {
 
 	protected Label label;
 	
@@ -28,9 +27,6 @@ public class Button extends Layer implements Drawable {
 		g.fillRect(x, y, w, h);
 
 		g.setAlpha(100);
-		g.setColor(0, 0, 0xff);
-		g.drawRect(x, y, w, h);
-		
 		drawLabel(g);
 
 	}
@@ -51,7 +47,9 @@ public class Button extends Layer implements Drawable {
 		if(event.getAction() == MotionEvent.ACTION_DOWN) {
 
 			if(colideRectPoint(mx, my)) {
-
+				
+				executeAction(MotionEvent.ACTION_DOWN);
+				
 				System.out.println("Change Color!!");
 
 				if(color.getBlue()>200) {
@@ -64,7 +62,7 @@ public class Button extends Layer implements Drawable {
 
 		}
 
-	}
+	}	
 
 	public Label getLabel() {
 		return label;
