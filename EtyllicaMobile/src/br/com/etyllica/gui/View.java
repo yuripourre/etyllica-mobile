@@ -8,7 +8,7 @@ import br.com.etyllica.layer.Layer;
 
 public abstract class View extends Layer implements GUIComponent {
 	
-	protected Map<Integer,Action> actions;
+	protected Map<Integer,Action> actions = new HashMap<Integer, Action>();
 	
 	public View(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -19,15 +19,12 @@ public abstract class View extends Layer implements GUIComponent {
 	}
 	
 	public void addAction(int motionEvent, Action action) {
-		if(actions==null) {
-			actions = new HashMap<Integer, Action>();
-		}
-		
+				
 		actions.put(motionEvent, action);
 	}
 	
 	protected void executeAction(int motionEvent) {
-				
+		
 		Action action = actions.get(motionEvent);
 		
 		if(action!=null) {
