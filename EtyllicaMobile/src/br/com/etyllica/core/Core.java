@@ -20,7 +20,7 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	float scaleX = 1;
     float scaleY = 1;
 	
-    public Core(Context context) {
+    public Core(Context context, int width, int height) {
 		super(context);
         // adding the callback (this) to the surface holder to intercept events
         getHolder().addCallback(this);
@@ -30,7 +30,7 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
         scaleX = Configuration.getInstance().getScaleX();
         scaleY = Configuration.getInstance().getScaleY();
         
-        graphic = new Graphic(scaleX, scaleY);
+        graphic = new Graphic(width, height, scaleX, scaleY);
 
         // make the GamePanel focusable so it can handle events
         setFocusable(true);
