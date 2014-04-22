@@ -7,6 +7,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 
 public class Graphic {
 
@@ -17,18 +18,24 @@ public class Graphic {
 	private float xScale = 1;
 	private float yScale = 1;
 	
+	private int width;
+	private int height;
+	
 	private boolean antiAlias = true;
 	
 	private int alpha = 255;
 
-	public Graphic(float xScale, float yScale) {
+	public Graphic(int width, int height, float xScale, float yScale) {
 		super();		
-
-		paint = new Paint();
-		paint.setAntiAlias(antiAlias);
+		
+		this.width = width;
+		this.height = height;
 		
 		this.xScale = xScale;
 		this.yScale = yScale;
+		
+		paint = new Paint();
+		paint.setAntiAlias(antiAlias);
 	}
 
 	public Canvas getCanvas() {
@@ -127,12 +134,34 @@ public class Graphic {
 		canvas.drawText(text, (x+w/2-bounds.width()/2)*xScale, (y+h/2+bounds.height()/2)*yScale, paint);
 	}
 	
+	public void drawStringShadowX(int y, String text) {
+		drawStringShadow(0, y, width, 0, text, br.com.etyllica.core.graphics.Color.BLACK);
+	}
+	
+	public void drawStringShadow(int x, int y, int w, int h, String text, br.com.etyllica.core.graphics.Color shadowColor) {
+		
+		//Save current color
+		int color = paint.getColor();
+		
+		//Draw Shadow
+		this.setColor(shadowColor);
+		drawString(x+1, y+1, w, h, text);
+		
+		//Draw Text
+		paint.setColor(color);
+		drawString(x, y, w, h, text);
+	}
+	
 	public void write(int x, int y, String text) {
 		canvas.drawText(text, x*xScale, y*yScale, paint); 
 	}
 	
 	public void setFontSize(float size) {
 		paint.setTextSize(size*yScale);
+	}
+	
+	public void setFontStyle(Typeface typeFace) {
+		paint.setTypeface(typeFace);
 	}
 	
 	public void drawRect(int x, int y, int w, int h) {
