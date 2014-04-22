@@ -123,8 +123,8 @@ public class Graphic {
 		
 		Rect bounds = new Rect();
 		
-		paint.getTextBounds(text, 0, text.length(), bounds);	
-		canvas.drawText(text, (x+w/2+(bounds.left-bounds.right)/2)*xScale, (y+h/2+(bounds.bottom-bounds.top)/2)*yScale, paint);
+		paint.getTextBounds(text, 0, text.length(), bounds);
+		canvas.drawText(text, (x+w/2-bounds.width()/2)*xScale, (y+h/2+bounds.height()/2)*yScale, paint);
 	}
 	
 	public void write(int x, int y, String text) {
@@ -147,6 +147,38 @@ public class Graphic {
 		setFillStyle();
 		
 		drawCanvasRect(x,y,w,h);
+	}
+	
+	public void drawOval(int x, int y, int w, int h) {
+		
+		setDrawStyle();
+		
+		drawCanvasOval(x,y,w,h);
+		
+	}
+		
+	public void fillOval(int x, int y, int w, int h) {
+		
+		setFillStyle();
+		
+		drawCanvasOval(x,y,w,h);
+		
+	}
+	
+	public void drawRoundRect(int x, int y, int w, int h, int arcWidth, int arcHeight) {
+		
+		setDrawStyle();
+		
+		drawCanvasRoundRect(x, y, w, h, arcWidth, arcHeight);
+		
+	}
+	
+	public void fillRoundRect(int x, int y, int w, int h, int arcWidth, int arcHeight) {
+		
+		setFillStyle();
+		
+		drawCanvasRoundRect(x, y, w, h, arcWidth, arcHeight);
+		
 	}
 	
 	private void setFillStyle() {
@@ -172,6 +204,20 @@ public class Graphic {
 		RectF rect = getScaledRect(x, y, w, h);
 		
 		canvas.drawRect(rect, paint);
+	}
+	
+	private void drawCanvasRoundRect(int x, int y, int w, int h, int roundnessX, int roundnessY) {
+		
+		RectF rect = getScaledRect(x, y, w, h);
+		
+		canvas.drawRoundRect(rect, roundnessX, roundnessY, paint);
+	}
+	
+	private void drawCanvasOval(int x, int y, int w, int h) {
+		
+		RectF rect = getScaledRect(x, y, w, h);
+		
+		canvas.drawOval(rect, paint);
 	}
 	
 	private RectF getScaledRect(int x, int y, int w, int h) {
