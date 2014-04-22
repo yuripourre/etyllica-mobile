@@ -23,6 +23,9 @@ public abstract class EtyllicaMobile extends Activity {
 
 	protected int w = 1;
 	protected int h = 1;
+	
+	private float xScale = 1;
+	private float yScale = 1;
 
 	protected boolean orientationHorizontal = true;
 
@@ -54,9 +57,6 @@ public abstract class EtyllicaMobile extends Activity {
 
 		windowWidth = size.x;
 		windowHeight = size.y;
-
-		float xScale = 1;
-		float yScale = 1;
 		
 		if(orientationHorizontal) {
 			xScale = (float)windowWidth/(float)w;
@@ -90,7 +90,10 @@ public abstract class EtyllicaMobile extends Activity {
 
 		Log.d("MOBILE INIT", "Screen Height: "+windowHeight+" "+h);
 
-		core = new Core(this, w, h);
+		int scaledWidth = (int)(w*xScale);
+		int scaledHeight = (int)(h*yScale);
+		
+		core = new Core(this, scaledWidth, scaledHeight);
 
 		startGame();
 
