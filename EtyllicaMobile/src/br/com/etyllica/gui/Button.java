@@ -10,8 +10,10 @@ import br.com.etyllica.gui.label.Label;
 public class Button extends View implements Drawable {
 
 	protected Label label;
-	
-	protected Color color;	
+
+	protected Color color;
+
+	private boolean activated = false;
 
 	public Button(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -30,13 +32,13 @@ public class Button extends View implements Drawable {
 		drawLabel(g);
 
 	}
-	
+
 	protected void drawLabel(Graphic g) {
-		
+
 		if(label!=null) {
 			label.draw(g);
 		}
-		
+
 	}
 
 	public void handleEvent(PointerEvent event) {
@@ -44,12 +46,34 @@ public class Button extends View implements Drawable {
 		int mx = event.getX();
 		int my = event.getY();
 
-		if(event.getAction() == MotionEvent.ACTION_DOWN) {
+		if(onMouse(mx, my)) {
 
-			if(onMouse(mx, my)) {
-				
-				executeAction(MotionEvent.ACTION_DOWN);
+			if(event.getAction() == MotionEvent.ACTION_DOWN) {
 
+				if(!activated) {
+					activated = true;
+					color = Color.DARK_GRAY;
+				}
+
+			} else if(event.getAction() == MotionEvent.ACTION_UP) {
+
+				if(activated) {
+
+					executeAction(MotionEvent.ACTION_UP);
+
+					color = Color.BLACK;
+					
+				}
+
+			}				
+
+		}
+
+		if(event.getAction() == MotionEvent.ACTION_MOVE) {
+
+			if(activated) {
+				activated = false;
+				color = Color.BLACK;
 			}
 
 		}
@@ -62,8 +86,8 @@ public class Button extends View implements Drawable {
 
 	public void setLabel(Label label) {
 		this.label = label;
-		
+
 		this.label.setContentBounds(x, y, w, h);
 	}
-	
+
 }
