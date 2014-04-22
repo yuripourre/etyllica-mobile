@@ -2,6 +2,7 @@ package br.com.etyllica.core;
 
 import java.util.Locale;
 
+import android.os.Vibrator;
 import br.com.etyllica.i18n.Language;
 import br.com.etyllica.i18n.LanguageAdapter;
 
@@ -25,6 +26,8 @@ public class Configuration {
 	private float scaleX = 1;
 
 	private float scaleY = 1;
+	
+	private Vibrator vibrator;
 
 	private Configuration(){
 		super();
@@ -68,5 +71,13 @@ public class Configuration {
 	public Locale getLocale() {
 		return locale;
 	}
+
+	public Vibrator getVibrator() {
+		return vibrator;
+	}
+
+	public void setVibrator(Vibrator vibrator) {
+		this.vibrator = vibrator;
+	}	
 		
 }

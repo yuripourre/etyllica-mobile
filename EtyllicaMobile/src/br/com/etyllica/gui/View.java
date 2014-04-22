@@ -3,6 +3,7 @@ package br.com.etyllica.gui;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.etyllica.core.Configuration;
 import br.com.etyllica.core.event.Action;
 import br.com.etyllica.layer.Layer;
 
@@ -28,6 +29,8 @@ public abstract class View extends Layer implements GUIComponent {
 		Action action = actions.get(motionEvent);
 		
 		if(action!=null) {
+			
+			Configuration.getInstance().getVibrator().vibrate(300);
 			
 			action.executeAction();
 			

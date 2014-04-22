@@ -3,10 +3,12 @@ package br.com.etyllica.core;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Display;
 import android.view.Window;
@@ -82,9 +84,7 @@ public abstract class EtyllicaMobile extends Activity {
 
 		computeSize();
 		
-		Configuration.getInstance().setLocale(Locale.getDefault());
-
-		ImageLoader.getInstance().setAssets(getAssets());
+		configure();
 
 		Log.d("MOBILE INIT", "Screen Width: "+windowWidth+" "+w);
 
@@ -100,6 +100,18 @@ public abstract class EtyllicaMobile extends Activity {
 		core.init();
 
 		setContentView(core);
+	}
+	
+	private void configure() {
+		
+		Configuration.getInstance().setLocale(Locale.getDefault());
+		
+		Vibrator vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+		
+		Configuration.getInstance().setVibrator(vibrator);
+		
+		ImageLoader.getInstance().setAssets(getAssets());
+		
 	}
 
 	@Override
