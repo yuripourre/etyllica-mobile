@@ -107,8 +107,14 @@ public abstract class EtyllicaMobile extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();  // Always call the superclass method first
-
-		startGame();
+		
+		core.setPause(true);
+		
+	}
+	
+	@Override
+	public void onResume() {
+		super.onCreate(null);
 	}
 
 	public void startGame() {

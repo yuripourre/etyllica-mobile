@@ -84,8 +84,10 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 		
 		Application nextApplication = application.getReturnApplication();
 
-		if(nextApplication!=null){
-			nextApplication.load(); 
+		if(nextApplication!=null) {
+						
+			nextApplication.load();
+			
 			this.application = nextApplication;
 		}			
 
@@ -112,6 +114,10 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 		// Schedules a repaint.
 		//invalidate();
 		return true;
+	}
+
+	public void setPause(boolean pause) {
+		thread.setRunning(!pause);
 	}
 	
 }
