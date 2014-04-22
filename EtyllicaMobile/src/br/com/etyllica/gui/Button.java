@@ -11,7 +11,7 @@ public class Button extends View implements Drawable {
 
 	protected Label label;
 	
-	private Color color;	
+	protected Color color;	
 
 	public Button(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -46,17 +46,9 @@ public class Button extends View implements Drawable {
 
 		if(event.getAction() == MotionEvent.ACTION_DOWN) {
 
-			if(colideRectPoint(mx, my)) {
+			if(onMouse(mx, my)) {
 				
 				executeAction(MotionEvent.ACTION_DOWN);
-				
-				System.out.println("Change Color!!");
-
-				if(color.getBlue()>200) {
-					color = Color.BLACK;
-				} else {
-					color = Color.BLUE;
-				}
 
 			}
 
