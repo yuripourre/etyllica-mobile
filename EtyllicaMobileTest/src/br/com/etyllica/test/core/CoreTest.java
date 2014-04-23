@@ -18,7 +18,7 @@ public class CoreTest extends AndroidTestCase{
 		Configuration.getInstance().setScaleX(2);
 		Configuration.getInstance().setScaleY(3);
 		
-		core = new Core(context);
+		core = new Core(context, 800, 600);
 		core.setApplication(new MockEtyllicaApplication(100,100)); 
 	}
 	
