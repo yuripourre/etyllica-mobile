@@ -68,7 +68,7 @@ public class CoreThread extends Thread {
 
 					if(!paused){
 
-						core.update(timeDiff);
+						core.update();
 						core.draw(canvas);
 
 					}
@@ -86,11 +86,10 @@ public class CoreThread extends Thread {
 					}
 
 					while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) {
-						timeDiff = System.currentTimeMillis() - beginTime;
-
+						
 						// we need to catch up
 						// update without rendering
-						core.update(timeDiff); 
+						core.update(); 
 						// add frame period to check if in next frame
 						sleepTime += FRAME_PERIOD;	
 						framesSkipped++;

@@ -18,6 +18,8 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private CoreThread thread;
 	
+	private long start;
+	
 	float scaleX = 1;
     float scaleY = 1;
 	
@@ -33,6 +35,8 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
         
         graphic = new Graphic(width, height, scaleX, scaleY);
 
+        start = System.currentTimeMillis();
+        
         // make the GamePanel focusable so it can handle events
         setFocusable(true);
     }
@@ -79,10 +83,14 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 
 	}
 
-	public void update(long now) {
+	public void update() {
 		
-		application.getAnimation().animate(now);
+		long delta = System.currentTimeMillis()-start;
 		
+		application.getAnimation().animate(delta);
+		
+		application.update(delta);
+			
 		Application nextApplication = application.getReturnApplication();
 
 		if(nextApplication!=null) {

@@ -29,6 +29,10 @@ public abstract class Application {
 	
 	public abstract void updateMouse(PointerEvent event);
 	
+	public void update(long now) {
+		// TODO Auto-generated method stub		
+	}
+	
 	public Application getReturnApplication() {
 		return returnApplication;
 	}
