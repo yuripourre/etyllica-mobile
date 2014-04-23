@@ -52,20 +52,20 @@ public class Button extends View implements Drawable {
 
 				if(!activated) {
 					activated = true;
-					color = Color.DARK_GRAY;
+					color = Color.DARK_GRAY;					
 				}
 
 			} else if(event.getAction() == MotionEvent.ACTION_UP) {
 
 				if(activated) {
 
-					executeAction(MotionEvent.ACTION_UP);
-
 					color = Color.BLACK;
 					
 				}
 
 			}				
+			
+			executeAction(event.getAction());
 
 		}
 
