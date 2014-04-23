@@ -89,14 +89,10 @@ public class Layer extends GeometricLayer implements Drawable {
 		Matrix matrix = new Matrix();
 		matrix.postRotate((float)angle);
 		
-		float xScale = Configuration.getInstance().getScaleX();
-		float yScale = Configuration.getInstance().getScaleY();
-				
 		if(scale!=1) {
+			matrix.postTranslate((float)(-w/2), (float)(-h/2));
 			matrix.postScale((float)scale, (float)scale);
-			matrix.postTranslate(x*xScale-(w*xScale)/2, y*yScale-h*yScale/2);
-		} else {
-			matrix.postTranslate(x*xScale, y*yScale);
+			matrix.postTranslate((float)(w/2), (float)(h/2));
 		}
 
 		return matrix;

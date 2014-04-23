@@ -77,7 +77,7 @@ public class Graphic {
 			float ch = h*yScale;
 			
 			Rect src = new Rect((int)(xImage*xScale),(int)(yImage*yScale),(int)(xImage+cw),(int)(yImage+ch));
-			RectF dist = new RectF(x, y, x+cw, y+ch);
+			RectF dist = getScaledRect(x, y, w, h);
 
 			canvas.drawBitmap(bitmap, src, dist, paint);
 		}
