@@ -34,6 +34,10 @@ public class Layer extends GeometricLayer implements Drawable {
 	 */
 	protected boolean visible = true;
 
+	public Layer() {
+		super();
+	}
+	
 	public Layer(int x, int y) {
 		super(x, y);
 	}
