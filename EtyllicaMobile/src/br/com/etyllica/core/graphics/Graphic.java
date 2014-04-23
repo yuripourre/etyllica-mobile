@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -127,7 +126,7 @@ public class Graphic {
 		this.write(x, y, text);
 	}
 	
-	public void drawString(int x, int y, int w, int h, String text) {
+	public void drawString(int x, int y, float w, float h, String text) {
 		
 		Rect bounds = new Rect();
 				
@@ -138,10 +137,13 @@ public class Graphic {
 	}
 	
 	public void drawStringShadowX(int y, String text) {
-		drawStringShadow(0, y, width, 0, text, br.com.etyllica.core.graphics.Color.BLACK);
+		
+		float size = paint.getTextSize();
+		
+		drawStringShadow(0, y, width, size, text, br.com.etyllica.core.graphics.Color.BLACK);
 	}
 	
-	public void drawStringShadow(int x, int y, int w, int h, String text, br.com.etyllica.core.graphics.Color shadowColor) {
+	public void drawStringShadow(int x, int y, float w, float h, String text, br.com.etyllica.core.graphics.Color shadowColor) {
 		
 		//Save current color
 		int color = paint.getColor();
