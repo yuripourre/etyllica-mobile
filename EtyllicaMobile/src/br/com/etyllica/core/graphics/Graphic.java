@@ -24,6 +24,8 @@ public class Graphic {
 	private boolean antiAlias = true;
 	
 	private int alpha = 255;
+	
+	private Matrix eye = new Matrix();
 
 	public Graphic(int width, int height, float xScale, float yScale) {
 		super();		
@@ -76,7 +78,7 @@ public class Graphic {
 			float cw = w*xScale;
 			float ch = h*yScale;
 			
-			Rect src = new Rect((int)(xImage*xScale),(int)(yImage*yScale),(int)(xImage+cw),(int)(yImage+ch));
+			Rect src = new Rect((int)(xImage*xScale),(int)(yImage*yScale),(int)(xImage*xScale+cw),(int)(yImage*yScale+ch));
 			RectF dist = getScaledRect(x, y, w, h);
 
 			canvas.drawBitmap(bitmap, src, dist, paint);
@@ -87,7 +89,6 @@ public class Graphic {
 	
 	private void resetMatrix() {
 		
-		Matrix eye  = new Matrix();
 		eye.reset();
 		
 		canvas.setMatrix(eye);
