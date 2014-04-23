@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -129,9 +130,11 @@ public class Graphic {
 	public void drawString(int x, int y, int w, int h, String text) {
 		
 		Rect bounds = new Rect();
-		
+				
 		paint.getTextBounds(text, 0, text.length(), bounds);
-		canvas.drawText(text, (x+w/2-bounds.width()/2)*xScale, (y+h/2+bounds.height()/2)*yScale, paint);
+				
+		canvas.drawText(text, ((x+w/2)*xScale)-bounds.width()/2, ((y+h/2)*yScale)+bounds.height()/2, paint);
+
 	}
 	
 	public void drawStringShadowX(int y, String text) {
