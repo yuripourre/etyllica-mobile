@@ -52,6 +52,9 @@ public class StaticLayer extends Layer {
 
 		this.path = path;
 		load();
+		
+		this.w = w;
+		this.h = h;
 	}
 
 	/**
