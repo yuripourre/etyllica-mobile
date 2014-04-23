@@ -13,6 +13,7 @@ import br.com.etyllica.core.input.mouse.PointerEvent;
 public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private Application application;
+	
 	private Graphic graphic;
 	
 	private CoreThread thread;
@@ -119,5 +120,6 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	public void setPause(boolean pause) {
 		thread.setRunning(!pause);
 	}
+	
 	
 }

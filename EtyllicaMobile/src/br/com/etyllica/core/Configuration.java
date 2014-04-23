@@ -27,6 +27,8 @@ public class Configuration {
 
 	private float scaleY = 1;
 	
+	private boolean vibration = false;
+	
 	private Vibrator vibrator;
 
 	private Configuration(){
@@ -72,10 +74,19 @@ public class Configuration {
 		return locale;
 	}
 
-	public Vibrator getVibrator() {
-		return vibrator;
+	public void vibrate(long milliseconds) {
+		if(vibration)
+			vibrator.vibrate(milliseconds);
 	}
 
+	public void enableVibration() {
+		this.vibration = true;
+	}
+	
+	public void disableVibration() {
+		this.vibration = false;
+	}
+	
 	public void setVibrator(Vibrator vibrator) {
 		this.vibrator = vibrator;
 	}	

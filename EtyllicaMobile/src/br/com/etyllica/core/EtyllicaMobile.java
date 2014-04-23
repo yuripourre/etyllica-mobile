@@ -18,7 +18,7 @@ import br.com.etyllica.core.loader.ImageLoader;
 
 public abstract class EtyllicaMobile extends Activity {
 
-	private Core core;
+	protected Core core;
 
 	private int windowWidth;
 	private int windowHeight;
