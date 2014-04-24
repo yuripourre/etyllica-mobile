@@ -1,0 +1,126 @@
+package br.com.etyllica.core.context.load;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import br.com.etyllica.core.context.Application;
+import br.com.etyllica.core.context.Container;
+import br.com.etyllica.core.context.Context;
+
+/**
+ * 
+ * @author yuripourre
+ * @license LGPLv3
+ *
+ */
+
+public class ApplicationLoader implements LoadListener {
+
+	private Loader loader;
+	
+	private Updater updater;
+	
+	private Container window;
+
+	private Application application;
+
+	private LoadApplication loadApplication;
+
+	private boolean called = false;
+	
+	public ApplicationLoader() {
+		super();
+	}
+
+	final ScheduledExecutorService loadExecutor = Executors.newScheduledThreadPool(2);
+	
+	public void loadApplication() {
+
+		window.setLoaded(false);
+		
+		loader = new Loader();
+		updater = new Updater();
+		
+		Future<?> future = loadExecutor.submit(loader);
+		
+		try {
+		    future.get();
+		} catch (ExecutionException e) {
+		    Throwable cause = e.getCause();
+		    cause.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		loadExecutor.scheduleAtFixedRate(updater, 0, 10, TimeUnit.MILLISECONDS);
+
+	}
+	
+	private class Loader implements Runnable {
+
+		public void run() {
+			called = false;
+						
+			application.setLoadListener(ApplicationLoader.this);
+			application.startLoad();
+			
+		}
+
+	}
+	
+	private class Updater implements Runnable {
+
+		public void run() {
+			
+			//while(application.isLocked()) {
+			if(!called) {
+				
+				if(!window.isLoaded()) {
+					loadApplication.setText(application.getLoadingPhrase(), application.getLoading());
+				}
+
+			}else{
+				
+				window.setApplication(application);
+
+				window.setLoaded(true);
+			}
+			
+		}
+
+	}
+
+	public Context getApplication() {
+		return application;
+	}
+
+	public void setApplication(Application application) {
+		this.application = application;
+	}
+
+	public LoadApplication getLoadApplication() {
+		return loadApplication;
+	}
+
+	public void setLoadApplication(LoadApplication loadApplication) {
+		this.loadApplication = loadApplication;
+	}
+
+	public Container getContainer() {
+		return window;
+	}
+
+	public void setContainer(Container window) {
+		this.window = window;
+	}
+
+	@Override
+	public void loaded() {
+		called = true;
+	}
+
+}

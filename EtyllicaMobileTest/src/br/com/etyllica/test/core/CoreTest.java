@@ -19,7 +19,7 @@ public class CoreTest extends AndroidTestCase{
 		Configuration.getInstance().setScaleY(3);
 		
 		core = new Core(context, 800, 600);
-		core.setApplication(new MockEtyllicaApplication(100,100)); 
+		core.setMainApplication(new MockEtyllicaApplication(100,100)); 
 	}
 	
 	public void testCoreConstructorParams() {
@@ -34,14 +34,6 @@ public class CoreTest extends AndroidTestCase{
 	
 	public void testApplicationMethods(){
 		assertNotNull(core.getApplication());
-	}
-	
-	public void testCoreInit() {
-		
-		core.init();
-		
-		assertEquals(core.getApplication().getLoading(),100);
-		
-	}
+	}	
 
 }

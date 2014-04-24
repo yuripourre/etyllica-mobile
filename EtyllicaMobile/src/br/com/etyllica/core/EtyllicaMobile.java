@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
-import br.com.etyllica.core.application.Application;
+import br.com.etyllica.core.context.Application;
 import br.com.etyllica.core.loader.ImageLoader;
 
 public abstract class EtyllicaMobile extends Activity {
@@ -94,8 +94,6 @@ public abstract class EtyllicaMobile extends Activity {
 
 		startGame();
 
-		core.init();
-
 		setContentView(core);
 	}
 	
@@ -130,7 +128,7 @@ public abstract class EtyllicaMobile extends Activity {
 	}
 
 	public void startGame() {
-		core.setApplication(startApplication());
+		core.setMainApplication(startApplication());
 	}
 
 	public abstract Application startApplication();

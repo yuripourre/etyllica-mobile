@@ -1,6 +1,6 @@
 package br.com.etyllica.test;
 
-import br.com.etyllica.core.application.Application;
+import br.com.etyllica.core.context.Application;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.PointerEvent;
 
