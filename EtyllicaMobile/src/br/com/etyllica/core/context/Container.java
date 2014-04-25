@@ -46,6 +46,7 @@ public class Container {
 
 	public void setLoadApplication(DefaultLoadApplication loadApplication) {
 		this.application = loadApplication;
+		this.loadApplication = loadApplication;
 	}
 
 	public void reload(Application application) {
