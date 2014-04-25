@@ -144,6 +144,22 @@ public class Graphic {
 		drawStringShadow(0, y, width, size, text, br.com.etyllica.core.graphics.Color.BLACK);
 	}
 	
+	public void drawStringShadow(int x, int y, String text) {
+		
+		br.com.etyllica.core.graphics.Color shadowColor = br.com.etyllica.core.graphics.Color.BLACK;
+		
+		//Save current color
+		int color = paint.getColor();
+		
+		//Draw Shadow
+		this.setColor(shadowColor);
+		write(x+1, y+1, text);
+		
+		//Draw Text
+		paint.setColor(color);
+		write(x, y, text);
+	}
+	
 	public void drawStringShadow(int x, int y, float w, float h, String text, br.com.etyllica.core.graphics.Color shadowColor) {
 		
 		//Save current color
