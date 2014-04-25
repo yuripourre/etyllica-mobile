@@ -308,6 +308,10 @@ public class AnimatedLayer extends ImageLayer {
 	@Override
 	public void draw(Graphic g) {
 		
+		if(!visible) {
+			return;
+		}
+		
 		Paint paint = null;
 		
 		if(opacity!=255){

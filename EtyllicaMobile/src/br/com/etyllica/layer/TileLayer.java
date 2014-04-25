@@ -16,7 +16,11 @@ public class TileLayer extends ImageLayer{
 		tile = ImageLoader.getInstance().getTile(path,w,h,xImage,yImage);
 	}
 	
-	public void draw(Graphic g){
+	public void draw(Graphic g) {
+		
+		if(!visible) {
+			return;
+		}
 		
 		Paint paint = null;
 		

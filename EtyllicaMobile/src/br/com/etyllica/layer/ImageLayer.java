@@ -56,6 +56,10 @@ public class ImageLayer extends StaticLayer {
 
 	public void draw(Graphic g) {
 		
+		if(!visible) {
+			return;
+		}
+		
 		Paint paint = null;
 		
 		if(opacity!=255){
