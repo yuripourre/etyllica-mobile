@@ -8,6 +8,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import br.com.etyllica.core.context.Application;
 import br.com.etyllica.core.context.Container;
+import br.com.etyllica.core.context.load.DefaultLoadApplication;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.PointerEvent;
 
@@ -15,8 +16,6 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 
 	private Container activeWindow;
 	
-	private Application application;
-
 	private Graphic graphic;
 
 	private CoreThread thread;
@@ -79,11 +78,23 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 		reload(application);		
 
 	}
+	
+	public void setLoadApplication(DefaultLoadApplication loadApplication) {
+
+		activeWindow.setLoadApplication(loadApplication);
+
+	}
 
 	public void update() {
 
+		if(!activeWindow.isLoaded()) {
+			return;
+		}
+		
 		long delta = System.currentTimeMillis()-start;
-
+		
+		Application application = activeWindow.getApplication();
+		
 		updateApplication(application, delta);
 		
 	}
@@ -98,14 +109,14 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 
 				context.setLastUpdate(now);
 				
-				application.getAnimation().animate(now);
+				context.getAnimation().animate(now);
 
 			}else if(now-context.getLastUpdate()>=context.getUpdateInterval()) {
 
 				context.timeUpdate(now);
 				context.setLastUpdate(now);
 
-				application.getAnimation().animate(now);
+				context.getAnimation().animate(now);
 
 			}
 
@@ -143,6 +154,8 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	public void draw(Canvas canvas) {
 
 		canvas.drawColor(Color.WHITE);
+		
+		Application application = activeWindow.getApplication();
 
 		application.draw(graphic);
 	}
@@ -151,6 +164,9 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	public boolean onTouchEvent(MotionEvent me) {
 
 		PointerEvent event = new PointerEvent((int)(me.getX()/scaleX), (int)(me.getY()/scaleY), me.getAction());
+		
+		Application application = activeWindow.getApplication();
+		
 		application.updateMouse(event);
 
 		// Schedules a repaint.
@@ -164,8 +180,14 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 
 	public Application getApplication() {
 		
-		return application;
+		return activeWindow.getApplication();	
 	}
 
+	public boolean onBackPressed() {
+		
+		Application application = activeWindow.getApplication();
+		
+		return application.back();
+	}
 
 }

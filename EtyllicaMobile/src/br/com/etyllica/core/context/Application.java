@@ -30,8 +30,11 @@ public abstract class Application extends Context {
 	}
 
 	public void timeUpdate(long now) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
+	}
+
+	public boolean back() {
+		return false;
 	}
 	
 	public Application getReturnApplication() {

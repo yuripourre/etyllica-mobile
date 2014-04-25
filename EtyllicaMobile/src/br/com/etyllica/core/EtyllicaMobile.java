@@ -92,9 +92,10 @@ public abstract class EtyllicaMobile extends Activity {
 
 		core = new Core(this, w, h);
 
+		setContentView(core);
+		
 		startGame();
 
-		setContentView(core);
 	}
 	
 	private void configure() {
@@ -114,6 +115,15 @@ public abstract class EtyllicaMobile extends Activity {
 		super.onConfigurationChanged(newConfig);
 	}
 
+	@Override
+	public void onBackPressed() {
+		
+		if(!core.onBackPressed()) {
+			super.onBackPressed();
+		}
+		
+	}
+	
 	@Override
 	public void onPause() {
 		super.onPause();  // Always call the superclass method first
