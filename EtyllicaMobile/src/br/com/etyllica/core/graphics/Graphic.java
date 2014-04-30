@@ -64,7 +64,7 @@ public class Graphic {
 		this.yScale = yScale;
 	}
 
-	public void drawBitmap(Bitmap bitmap, int x, int y, int w, int h, int xImage, int yImage, Paint paint) {
+	public void drawBitmap(Bitmap bitmap, int x, int y, int w, int h, int xImage, int yImage) {
 
 		if(xScale==1 && yScale==1) {
 

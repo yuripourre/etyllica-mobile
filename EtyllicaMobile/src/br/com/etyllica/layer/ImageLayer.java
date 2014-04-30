@@ -1,6 +1,5 @@
 package br.com.etyllica.layer;
 
-import android.graphics.Paint;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.ImageLoader;
 
@@ -60,16 +59,13 @@ public class ImageLayer extends StaticLayer {
 			return;
 		}
 		
-		Paint paint = null;
-		
-		if(opacity!=255){
-			paint = new Paint();
-			paint.setAlpha(opacity);
+		if(opacity!=255) {			
+			g.setOpacity(opacity);
 		}
 		
 		g.setMatrix(getMatrix());
 		
-		g.drawBitmap(ImageLoader.getInstance().getImage(path), x, y, w, h, xImage, yImage, paint);
+		g.drawBitmap(ImageLoader.getInstance().getImage(path), x, y, w, h, xImage, yImage);
 		
 		g.resetMatrix();
 		

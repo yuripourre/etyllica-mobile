@@ -21,15 +21,12 @@ public class TileLayer extends ImageLayer{
 		if(!visible) {
 			return;
 		}
-		
-		Paint paint = null;
-		
-		if(opacity!=255){
-			paint = new Paint();
-			paint.setAlpha(opacity);
+				
+		if(opacity!=255) {
+			g.setOpacity(opacity);
 		}
 		
-		g.drawBitmap(tile, 0, 0, w, h, 0, 0, paint);
+		g.drawBitmap(tile, 0, 0, w, h, 0, 0);
 	}
 
 }
