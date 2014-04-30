@@ -5,6 +5,7 @@ import java.util.Locale;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ public abstract class EtyllicaMobile extends Activity {
 	private float yScale = 1;
 
 	protected boolean orientationHorizontal = true;
+	
+	final String VIBRATE_PERMISSION = "android.permission.VIBRATE";
 
 	public EtyllicaMobile(int width, int height) {
 		super();
@@ -102,12 +105,27 @@ public abstract class EtyllicaMobile extends Activity {
 		
 		Configuration.getInstance().setLocale(Locale.getDefault());
 		
-		Vibrator vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-		
-		Configuration.getInstance().setVibrator(vibrator);
+		configureVibration();
 		
 		ImageLoader.getInstance().setAssets(getAssets());
 		
+	}
+	
+	private void configureVibration() {
+		
+		if(checkPermission(VIBRATE_PERMISSION)) {
+			
+			Vibrator vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+			
+			Configuration.getInstance().setVibrator(vibrator);
+			
+		}
+		
+	}
+	
+	private boolean checkPermission(final String permission) {
+	    int res = this.checkCallingOrSelfPermission(permission);
+	    return (res == PackageManager.PERMISSION_GRANTED);
 	}
 
 	@Override

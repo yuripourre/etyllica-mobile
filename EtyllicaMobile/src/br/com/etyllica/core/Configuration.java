@@ -75,7 +75,7 @@ public class Configuration {
 	}
 
 	public void vibrate(long milliseconds) {
-		if(vibration)
+		if(vibration&&vibrator!=null)
 			vibrator.vibrate(milliseconds);
 	}
 
