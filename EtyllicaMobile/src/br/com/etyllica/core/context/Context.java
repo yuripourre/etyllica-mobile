@@ -104,7 +104,13 @@ public abstract class Context {
 	public void setLoadListener(LoadListener loadListener) {
 		this.loadListener = loadListener;
 	}
-	
-	
-	
+
+	public boolean isClearBeforeDraw() {
+		return clearBeforeDraw;
+	}
+
+	public void setClearBeforeDraw(boolean clearBeforeDraw) {
+		this.clearBeforeDraw = clearBeforeDraw;
+	}
+		
 }

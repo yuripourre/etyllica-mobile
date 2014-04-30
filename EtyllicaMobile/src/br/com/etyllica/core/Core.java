@@ -167,9 +167,11 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 
 	public void draw(Canvas canvas) {
 
-		canvas.drawColor(Color.WHITE);
-
 		Application application = activeWindow.getApplication();
+		
+		if(application.isClearBeforeDraw()) {
+			canvas.drawColor(Color.WHITE);
+		}
 
 		application.draw(graphic);
 	}
