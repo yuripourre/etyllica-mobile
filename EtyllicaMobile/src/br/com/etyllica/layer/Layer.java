@@ -1,7 +1,6 @@
 package br.com.etyllica.layer;
 
 import android.graphics.Matrix;
-import br.com.etyllica.core.Configuration;
 import br.com.etyllica.core.Drawable;
 import br.com.etyllica.core.graphics.Graphic;
 
@@ -34,10 +33,15 @@ public class Layer extends GeometricLayer implements Drawable {
 	 */
 	protected boolean visible = true;
 
+	/**
+	 * Transformation Matrix
+	 */
+	private Matrix matrix = new Matrix();
+
 	public Layer() {
 		super();
 	}
-	
+
 	public Layer(int x, int y) {
 		super(x, y);
 	}
@@ -45,7 +49,7 @@ public class Layer extends GeometricLayer implements Drawable {
 	public Layer(int x, int y, int w, int h) {
 		super(x,y,w,h);
 	}
-	
+
 	public int getOpacity() {
 		return opacity;
 	}
@@ -84,11 +88,14 @@ public class Layer extends GeometricLayer implements Drawable {
 		this.visible = visible;
 	}
 
-	public Matrix getMatrix(){
+	public Matrix getMatrix() {
 
-		Matrix matrix = new Matrix();
-		matrix.postRotate((float)angle);
-		
+		matrix.reset();
+
+		if(angle!=0) {
+			matrix.postRotate((float)angle);	
+		}
+
 		if(scale!=1) {
 			matrix.postTranslate((float)(-w/2), (float)(-h/2));
 			matrix.postScale((float)scale, (float)scale);

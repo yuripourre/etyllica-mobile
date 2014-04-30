@@ -25,7 +25,7 @@ public class Graphic {
 	
 	private int alpha = 255;
 	
-	private Matrix eye = new Matrix();
+	private final static Matrix resetMatrix = new Matrix();
 
 	public Graphic(int width, int height, float xScale, float yScale) {
 		super();		
@@ -84,14 +84,11 @@ public class Graphic {
 			canvas.drawBitmap(bitmap, src, dist, paint);
 		}
 		
-		resetMatrix();
 	}
 	
-	private void resetMatrix() {
-		
-		eye.reset();
-		
-		canvas.setMatrix(eye);
+	public void resetMatrix() {
+				
+		canvas.setMatrix(resetMatrix);
 	}
 
 	public void setMatrix(Matrix matrix){

@@ -323,6 +323,7 @@ public class AnimatedLayer extends ImageLayer {
 				
 		g.drawBitmap(ImageLoader.getInstance().getImage(path), x, y, tileW, tileH, xImage, yImage, paint);
 				
+		g.resetMatrix();
 	}
 	
 	/**

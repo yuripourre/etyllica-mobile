@@ -71,6 +71,8 @@ public class ImageLayer extends StaticLayer {
 		
 		g.drawBitmap(ImageLoader.getInstance().getImage(path), x, y, w, h, xImage, yImage, paint);
 		
+		g.resetMatrix();
+		
 	}
 	
 }
