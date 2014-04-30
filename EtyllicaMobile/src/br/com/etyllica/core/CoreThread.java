@@ -41,62 +41,6 @@ public class CoreThread extends Thread {
 
 	@Override
 	public void run() {
-
-		//Wait for surface creation
-		while(surfaceHolder.isCreating());
-		
-		long ticksPS = 1000 / MAX_FPS;
-
-		long startTime;
-
-		long sleepTime;
-
-		while (running) {
-
-			Canvas canvas = null;
-
-			startTime = System.currentTimeMillis();
-			
-			core.update();
-
-			try {
-
-				canvas = this.surfaceHolder.lockCanvas();
-				core.getGraphic().setCanvas(canvas);
-				
-				//synchronized (surfaceHolder) {
-
-					core.draw(canvas);
-
-				//}
-
-			} finally {
-
-				if (canvas != null) {
-					surfaceHolder.unlockCanvasAndPost(canvas);
-				}
-
-			}
-
-			sleepTime = ticksPS-(System.currentTimeMillis() - startTime);
-
-			try {
-
-				if (sleepTime > 0)
-
-					sleep(sleepTime);
-
-				else
-
-					sleep(10);
-
-			} catch (Exception e) {}
-
-		}
-
-	}
-
-	public void oldRun() {
 		Canvas canvas;
 
 		long lastTime = System.nanoTime();
