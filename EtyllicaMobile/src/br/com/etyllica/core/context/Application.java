@@ -19,6 +19,8 @@ public abstract class Application extends Context {
 		
 		this.w = w;
 		this.h = h;
+		
+		//setUpdateInterval(1000/50);//Fixed at 50 FPS
 	}
 	
 	public abstract void draw(Graphic g);

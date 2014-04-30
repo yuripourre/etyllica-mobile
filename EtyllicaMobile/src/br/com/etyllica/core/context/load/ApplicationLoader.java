@@ -35,7 +35,7 @@ public class ApplicationLoader implements LoadListener {
 
 	private Future<?> future;
 	
-	private static final int UPDATE_INTERVAL = 100;
+	private static final int UPDATE_INTERVAL = 200;
 	
 	public ApplicationLoader() {
 		super();

@@ -15,23 +15,25 @@ import br.com.etyllica.core.input.mouse.PointerEvent;
 public class Core extends SurfaceView implements SurfaceHolder.Callback {
 
 	private Container activeWindow;
-	
+
 	private Graphic graphic;
 
 	private CoreThread thread;
-	
+
 	private long start;
 
-	float scaleX = 1;
-	float scaleY = 1;
+	private float scaleX = 1;
+	private float scaleY = 1;
+
+	private int fps;
 
 	public Core(Context context, int width, int height) {
 		super(context);
 		// adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
-		
+
 		activeWindow = new Container(width, height);
-		
+
 		// create the game loop thread
 		thread = new CoreThread(getHolder(), this);
 
@@ -61,8 +63,19 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 
 	}
 
-	@Override
+	//From http://www.javacodegeeks.com/2011/07/android-game-development-basic-game_05.html
+	
+	@Override 
 	public void surfaceDestroyed(SurfaceHolder holder) {
+		boolean retry = true;
+		while (retry) {
+			try {
+				thread.join();
+				retry = false;
+			} catch (InterruptedException e) {
+				// try again shutting down the thread
+			}
+		}
 	}
 
 	public Graphic getGraphic() {
@@ -78,7 +91,7 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 		reload(application);		
 
 	}
-	
+
 	public void setLoadApplication(DefaultLoadApplication loadApplication) {
 
 		activeWindow.setLoadApplication(loadApplication);
@@ -90,13 +103,13 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 		if(!activeWindow.isLoaded()) {
 			return;
 		}
-		
-		long delta = System.currentTimeMillis()-start;
-		
+
+		long now = System.currentTimeMillis()-start;
+
 		Application application = activeWindow.getApplication();
-		
-		updateApplication(application, delta);
-		
+
+		updateApplication(application, now);
+
 	}
 
 	private void updateApplication(Application context, long now) {
@@ -108,12 +121,13 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 				context.update(now);
 
 				context.setLastUpdate(now);
-				
+
 				context.getAnimation().animate(now);
 
-			}else if(now-context.getLastUpdate()>=context.getUpdateInterval()) {
+			} else if(now-context.getLastUpdate()>=context.getUpdateInterval()) {
 
 				context.timeUpdate(now);
+
 				context.setLastUpdate(now);
 
 				context.getAnimation().animate(now);
@@ -129,7 +143,7 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 		}
 
 	}
-	
+
 	protected void changeApplication() {
 
 		reload(activeWindow.getApplication().getReturnApplication());
@@ -154,7 +168,7 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	public void draw(Canvas canvas) {
 
 		canvas.drawColor(Color.WHITE);
-		
+
 		Application application = activeWindow.getApplication();
 
 		application.draw(graphic);
@@ -164,9 +178,9 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	public boolean onTouchEvent(MotionEvent me) {
 
 		PointerEvent event = new PointerEvent((int)(me.getX()/scaleX), (int)(me.getY()/scaleY), me.getAction());
-		
+
 		Application application = activeWindow.getApplication();
-		
+
 		application.updateMouse(event);
 
 		// Schedules a repaint.
@@ -179,15 +193,23 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public Application getApplication() {
-		
+
 		return activeWindow.getApplication();	
 	}
 
 	public boolean onBackPressed() {
-		
+
 		Application application = activeWindow.getApplication();
-		
+
 		return application.back();
+	}
+
+	public int getFps() {
+		return fps;
+	}
+
+	public void setFps(int fps) {
+		this.fps = fps;
 	}
 
 }

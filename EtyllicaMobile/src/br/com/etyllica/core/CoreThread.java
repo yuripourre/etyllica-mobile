@@ -5,6 +5,12 @@ import android.view.SurfaceHolder;
 
 public class CoreThread extends Thread {
 
+	private final int MAX_FPS = 25;
+
+	private final int MAX_FRAME_SKIPS = 16;
+
+	private final double FRAME_PERIOD = 1000000000D / MAX_FPS;
+
 	// Surface holder that can access the physical surface
 	private SurfaceHolder surfaceHolder;
 
@@ -14,8 +20,6 @@ public class CoreThread extends Thread {
 
 	// flag to hold game state
 	private boolean running;
-
-	private boolean paused = false;
 
 	public boolean isRunning() {
 		return running;
@@ -31,20 +35,75 @@ public class CoreThread extends Thread {
 		this.core = gamePanel;
 	}
 
-	private final int MAX_FPS = 30;
-	private final int MAX_FRAME_SKIPS = 16;
-	private final int FRAME_PERIOD = 1000 / MAX_FPS;
+	private void updateEngine(double delta) {
+		core.update();
+	}
 
 	@Override
+
 	public void run() {
+
+		long ticksPS = 1000 / MAX_FPS;
+
+		long startTime;
+
+		long sleepTime;
+
+		while (running) {
+
+			Canvas canvas = null;
+
+			startTime = System.currentTimeMillis();
+			
+			core.update();
+
+			try {
+
+				canvas = this.surfaceHolder.lockCanvas();
+				core.getGraphic().setCanvas(canvas);
+				
+				//synchronized (surfaceHolder) {
+
+					core.draw(canvas);
+
+				//}
+
+			} finally {
+
+				if (canvas != null) {
+					surfaceHolder.unlockCanvasAndPost(canvas);
+				}
+
+			}
+
+			sleepTime = ticksPS-(System.currentTimeMillis() - startTime);
+
+			try {
+
+				if (sleepTime > 0)
+
+					sleep(sleepTime);
+
+				else
+
+					sleep(10);
+
+			} catch (Exception e) {}
+
+		}
+
+	}
+
+	public void oldRun() {
 		Canvas canvas;
 
-		long beginTime;		// the time when the cycle begun
-		long timeDiff;		// the time it took for the cycle to execute
-		int sleepTime;		// ms to sleep (<0 if we're behind)
-		int framesSkipped;	// number of frames being skipped 
+		long lastTime = System.nanoTime();
 
-		sleepTime = 0;
+		int ups = 0;
+		int fps = 0;
+
+		long lastTimer = System.currentTimeMillis();
+		double delta = 0;
 
 		while (running) {
 
@@ -59,41 +118,35 @@ public class CoreThread extends Thread {
 
 				synchronized (surfaceHolder) {
 
-					framesSkipped = 0;	// resetting the frames skipped
+					long now = System.nanoTime();
+					delta += (now - lastTime) / FRAME_PERIOD;
+					lastTime = now;
 
-					beginTime = System.currentTimeMillis();
+					boolean renderOK = false;
 
-					// calculate how long did the cycle take
-					timeDiff = System.currentTimeMillis() - beginTime;
+					while(delta >= 1) {
+						ups++;
+						updateEngine(delta);
 
-					if(!paused){
+						delta -= 1;
+						renderOK = true;
+					}
 
-						core.update();
+					if(renderOK) {
+						fps++;
 						core.draw(canvas);
-
 					}
 
-					// calculate sleep time
-					sleepTime = (int)(FRAME_PERIOD - timeDiff);
+					if(System.currentTimeMillis() - lastTimer >= 1000) {
+						lastTimer += 1000;
 
-					if (sleepTime > 0) {
-						// if sleepTime > 0 we're OK
-						try {
-							// send the thread to sleep for a short period
-							// very useful for battery saving
-							Thread.sleep(sleepTime);
-						} catch (InterruptedException e) {}
+						System.out.println("frames: " + fps + " | updates: " + ups);
+						core.setFps(fps);
+
+						fps = 0;
+						ups = 0;
 					}
 
-					while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) {
-						
-						// we need to catch up
-						// update without rendering
-						core.update(); 
-						// add frame period to check if in next frame
-						sleepTime += FRAME_PERIOD;	
-						framesSkipped++;
-					}
 
 				}
 
