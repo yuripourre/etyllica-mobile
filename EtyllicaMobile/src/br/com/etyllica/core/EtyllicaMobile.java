@@ -93,7 +93,7 @@ public abstract class EtyllicaMobile extends Activity {
 
 		Log.d("MOBILE INIT", "Screen Height: "+windowHeight+" "+h);
 
-		core = new Core(this, w, h);
+		core = new Core(getApplicationContext(), w, h);
 
 		setContentView(core);
 		
