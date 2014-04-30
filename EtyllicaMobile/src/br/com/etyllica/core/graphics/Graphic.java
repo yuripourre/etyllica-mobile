@@ -25,7 +25,11 @@ public class Graphic {
 	
 	private int alpha = 255;
 	
-	private final static Matrix resetMatrix = new Matrix();
+	private final Matrix resetMatrix = new Matrix();
+	
+	private Rect bounds = new Rect();
+	
+	private RectF distBounds = new RectF();
 
 	public Graphic(int width, int height, float xScale, float yScale) {
 		super();		
@@ -68,20 +72,21 @@ public class Graphic {
 
 		if(xScale==1 && yScale==1) {
 
-			Rect src = new Rect(xImage,yImage,xImage+w,yImage+h);
-			Rect dist = new Rect(x,y,x+w,y+h);
+			bounds.set(xImage,yImage,xImage+w,yImage+h);
+			
+			distBounds.set(x,y,x+w,y+h);
 
-			canvas.drawBitmap(bitmap, src, dist, paint);
+			canvas.drawBitmap(bitmap, bounds, distBounds, paint);
 			
 		} else {
 			
 			float cw = w*xScale;
 			float ch = h*yScale;
 			
-			Rect src = new Rect((int)(xImage*xScale),(int)(yImage*yScale),(int)(xImage*xScale+cw),(int)(yImage*yScale+ch));
+			bounds.set((int)(xImage*xScale),(int)(yImage*yScale),(int)(xImage*xScale+cw),(int)(yImage*yScale+ch));
 			RectF dist = getScaledRect(x, y, w, h);
 
-			canvas.drawBitmap(bitmap, src, dist, paint);
+			canvas.drawBitmap(bitmap, bounds, dist, paint);
 		}
 		
 	}
@@ -123,11 +128,9 @@ public class Graphic {
 	public void drawString(String text, int x, int y) {
 		this.write(x, y, text);
 	}
-	
-	public void drawString(int x, int y, float w, float h, String text) {
 		
-		Rect bounds = new Rect();
-				
+	public void drawString(int x, int y, float w, float h, String text) {
+						
 		paint.getTextBounds(text, 0, text.length(), bounds);
 				
 		canvas.drawText(text, ((x+w/2)*xScale)-bounds.width()/2, ((y+h/2)*yScale)+bounds.height()/2, paint);
@@ -275,7 +278,9 @@ public class Graphic {
 		float cw = cx+w*xScale;
 		float ch = cy+h*yScale;
 		
-		return new RectF(cx, cy, cw, ch);
+		distBounds.set(cx, cy, cw, ch);
+		
+		return distBounds;
 		
 	}
 	
