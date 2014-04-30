@@ -40,9 +40,11 @@ public class CoreThread extends Thread {
 	}
 
 	@Override
-
 	public void run() {
 
+		//Wait for surface creation
+		while(surfaceHolder.isCreating());
+		
 		long ticksPS = 1000 / MAX_FPS;
 
 		long startTime;
