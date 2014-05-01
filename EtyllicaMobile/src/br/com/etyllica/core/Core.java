@@ -2,7 +2,7 @@ package br.com.etyllica.core;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -170,7 +170,7 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 		Application application = activeWindow.getApplication();
 		
 		if(application.isClearBeforeDraw()) {
-			canvas.drawColor(Color.WHITE);
+			canvas.drawColor(0, Mode.CLEAR);
 		}
 
 		application.draw(graphic);
