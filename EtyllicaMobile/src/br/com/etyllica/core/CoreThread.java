@@ -9,7 +9,7 @@ public class CoreThread extends Thread {
 
 	private final int MAX_FRAME_SKIPS = 16;
 
-	private final double FRAME_PERIOD = 1000000000D / MAX_FPS;
+	private final double FRAME_PERIOD = 1000D / MAX_FPS; //Frame period in Milliseconds
 
 	// Surface holder that can access the physical surface
 	private SurfaceHolder surfaceHolder;
@@ -36,14 +36,14 @@ public class CoreThread extends Thread {
 	}
 
 	private void updateEngine(double delta) {
-		core.update();
+		core.update(delta);
 	}
 
 	@Override
 	public void run() {
 		Canvas canvas;
 
-		long lastTime = System.nanoTime();
+		long lastTime = System.currentTimeMillis();
 
 		int ups = 0;
 		int fps = 0;
@@ -64,7 +64,7 @@ public class CoreThread extends Thread {
 
 				synchronized (surfaceHolder) {
 
-					long now = System.nanoTime();
+					long now = System.currentTimeMillis();
 					delta += (now - lastTime) / FRAME_PERIOD;
 					lastTime = now;
 
@@ -72,6 +72,7 @@ public class CoreThread extends Thread {
 
 					while(delta >= 1) {
 						ups++;
+						
 						updateEngine(delta);
 
 						delta -= 1;
@@ -86,7 +87,7 @@ public class CoreThread extends Thread {
 					if(System.currentTimeMillis() - lastTimer >= 1000) {
 						lastTimer += 1000;
 
-						System.out.println("frames: " + fps + " | updates: " + ups);
+						//System.out.println("frames: " + fps + " | updates: " + ups);
 						core.setFps(fps);
 
 						fps = 0;

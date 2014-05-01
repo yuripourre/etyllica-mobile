@@ -98,7 +98,7 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 
 	}
 
-	public void update() {
+	public void update(double delta) {
 
 		if(!activeWindow.isLoaded()) {
 			return;
