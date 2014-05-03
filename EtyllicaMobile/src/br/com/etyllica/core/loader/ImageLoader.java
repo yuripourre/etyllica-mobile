@@ -116,7 +116,7 @@ public class ImageLoader extends Loader {
 
 		Options options = new BitmapFactory.Options();
 	    options.inScaled = false;
-	    
+	    	    
 	    Bitmap bmp = BitmapFactory.decodeStream(inputStream, null, options);
 	    
 	    final int width = bmp.getWidth();
@@ -128,7 +128,9 @@ public class ImageLoader extends Loader {
 	    Matrix matrix = new Matrix();
 	    matrix.postScale(scaleX, scaleY);
 
-	    Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, true);
+	    boolean antiAliasFilter = true;
+	    
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, antiAliasFilter);
 	    return resizedBitmap;
 	}
 		
