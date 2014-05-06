@@ -60,8 +60,6 @@ public class CoreThread extends Thread {
 
 				canvas = this.surfaceHolder.lockCanvas();
 
-				core.getGraphic().setCanvas(canvas);
-
 				synchronized (surfaceHolder) {
 
 					long now = System.currentTimeMillis();
@@ -76,18 +74,21 @@ public class CoreThread extends Thread {
 						updateEngine(delta);
 
 						delta -= 1;
+												
 						renderOK = true;
 					}
 
 					if(renderOK) {
 						fps++;
 						core.draw(canvas);
+						
+						System.out.println("frames: " + fps);
 					}
 
 					if(System.currentTimeMillis() - lastTimer >= 1000) {
 						lastTimer += 1000;
 
-						//System.out.println("frames: " + fps + " | updates: " + ups);
+						System.out.println("frames: " + fps + " | updates: " + ups);
 						core.setFps(fps);
 
 						fps = 0;

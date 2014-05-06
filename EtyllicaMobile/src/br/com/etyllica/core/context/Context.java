@@ -46,7 +46,7 @@ public abstract class Context {
 	protected boolean paused = false;
 	
 	private LoadListener loadListener;
-	
+		
 	public Context() {
 		super();
 	}
@@ -112,5 +112,5 @@ public abstract class Context {
 	public void setClearBeforeDraw(boolean clearBeforeDraw) {
 		this.clearBeforeDraw = clearBeforeDraw;
 	}
-		
+
 }

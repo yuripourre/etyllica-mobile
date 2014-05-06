@@ -2,6 +2,7 @@ package br.com.etyllica.core;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -26,11 +27,14 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 	private float scaleY = 1;
 
 	private int fps;
+	
+	private PointerEvent lastEvent;
 
 	public Core(Context context, int width, int height) {
 		super(context);
 		// adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
+		getHolder().setFormat(0x00000004);
 
 		activeWindow = new Container(width, height);
 
@@ -41,9 +45,9 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 		scaleY = Configuration.getInstance().getScaleY();
 
 		graphic = new Graphic(width, height, scaleX, scaleY);
-
-		start = System.currentTimeMillis();
-
+		
+		this.setBackgroundColor(Color.WHITE);
+		
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
 	}
@@ -58,6 +62,8 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 		// at this point the surface is created and
 		// we can safely start the game loop
 
+		start = System.currentTimeMillis();
+		
 		thread.setRunning(true);
 		thread.start();
 
@@ -167,6 +173,8 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 
 	public void draw(Canvas canvas) {
 
+		graphic.setCanvas(canvas);
+		
 		Application application = activeWindow.getApplication();
 		
 		if(application.isClearBeforeDraw()) {
@@ -174,19 +182,18 @@ public class Core extends SurfaceView implements SurfaceHolder.Callback {
 		}
 
 		application.draw(graphic);
+		
 	}
-
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent me) {
 
-		PointerEvent event = new PointerEvent((int)(me.getX()/scaleX), (int)(me.getY()/scaleY), me.getAction());
+		lastEvent = new PointerEvent((int)(me.getX()/scaleX), (int)(me.getY()/scaleY), me.getAction());
 
 		Application application = activeWindow.getApplication();
 
-		application.updateMouse(event);
+		application.updateMouse(lastEvent);
 
-		// Schedules a repaint.
-		//invalidate();
 		return true;
 	}
 

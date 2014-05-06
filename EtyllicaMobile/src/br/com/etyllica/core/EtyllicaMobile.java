@@ -32,12 +32,13 @@ public abstract class EtyllicaMobile extends Activity {
 
 	protected boolean orientationHorizontal = true;
 	
-	final String VIBRATE_PERMISSION = "android.permission.VIBRATE";
+	private final String VIBRATE_PERMISSION = "android.permission.VIBRATE";
 
 	public EtyllicaMobile(int width, int height) {
 		super();
+		
 		this.w = width;
-		this.h = height;
+		this.h = height;		
 	}
 
 	private Point getDisplaySize(final Display display) {
@@ -82,7 +83,7 @@ public abstract class EtyllicaMobile extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
+		
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		computeSize();

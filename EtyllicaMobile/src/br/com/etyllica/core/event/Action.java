@@ -130,11 +130,9 @@ public class Action {
 
 							Class<?> typ = method.getParameterTypes()[i].getComponentType();
 
-							if(typ!=null){
-
-								if(!classes[i].getName().equals(typ.getName())){
-									return null;
-								}
+							if((typ!=null)&&(!classes[i].getName().equals(typ.getName()))){
+								
+								return null;
 								
 							}
 
