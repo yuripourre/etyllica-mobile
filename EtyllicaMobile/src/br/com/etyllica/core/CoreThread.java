@@ -3,13 +3,14 @@ package br.com.etyllica.core;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
-public class CoreThread extends Thread {
+public class CoreThread extends Thread implements GameCore {
 
-	private final int MAX_FPS = 25;
-
-	private final int MAX_FRAME_SKIPS = 16;
-
-	private final double FRAME_PERIOD = 1000D / MAX_FPS; //Frame period in Milliseconds
+	// desired fps
+	private final static int MAX_FPS = 30;
+	// maximum number of frames to be skipped
+	private final static int MAX_FRAME_SKIPS = 10;
+	// the frame period
+	private final static int FRAME_PERIOD = 1000 / MAX_FPS;
 
 	// Surface holder that can access the physical surface
 	private SurfaceHolder surfaceHolder;
@@ -20,6 +21,8 @@ public class CoreThread extends Thread {
 
 	// flag to hold game state
 	private boolean running;
+
+	private Canvas canvas;
 
 	public boolean isRunning() {
 		return running;
@@ -35,21 +38,17 @@ public class CoreThread extends Thread {
 		this.core = gamePanel;
 	}
 
-	private void updateEngine(double delta) {
-		core.update(delta);
-	}
-
 	@Override
 	public void run() {
-		Canvas canvas;
 
-		long lastTime = System.currentTimeMillis();
+		long beginTime;		// the time when the cycle begun
+		long timeDiff;		// the time it took for the cycle to execute
+		int sleepTime;		// ms to sleep (<0 if we're behind)
+		int framesSkipped;	// number of frames being skipped 
 
-		int ups = 0;
-		int fps = 0;
-
-		long lastTimer = System.currentTimeMillis();
-		double delta = 0;
+		sleepTime = 0;
+		
+		setFps(MAX_FPS);
 
 		while (running) {
 
@@ -62,39 +61,35 @@ public class CoreThread extends Thread {
 
 				synchronized (surfaceHolder) {
 
-					long now = System.currentTimeMillis();
-					delta += (now - lastTime) / FRAME_PERIOD;
-					lastTime = now;
+					//FrameSkipping Loop logic
+					beginTime = System.currentTimeMillis();
+					framesSkipped = 0;	// resetting the frames skipped
+		 
+					this.update(1);
+					
+					this.render();
+					// calculate how long did the cycle take
+					timeDiff = System.currentTimeMillis() - beginTime;
+					// calculate sleep time
+					sleepTime = (int)(FRAME_PERIOD - timeDiff);
 
-					boolean renderOK = false;
-
-					while(delta >= 1) {
-						ups++;
-						
-						updateEngine(delta);
-
-						delta -= 1;
-												
-						renderOK = true;
+					if (sleepTime > 0) {
+						// if sleepTime > 0 we're OK
+						try {
+							// send the thread to sleep for a short period
+							// very useful for battery saving
+							Thread.sleep(sleepTime);	
+						} catch (InterruptedException e) {}
 					}
 
-					if(renderOK) {
-						fps++;
-						core.draw(canvas);
-						
-						System.out.println("frames: " + fps);
+					while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) {
+						// we need to catch up
+						// update without rendering
+						this.update(1);
+						// add frame period to check if in next frame
+						sleepTime += FRAME_PERIOD;	
+						framesSkipped++;
 					}
-
-					if(System.currentTimeMillis() - lastTimer >= 1000) {
-						lastTimer += 1000;
-
-						System.out.println("frames: " + fps + " | updates: " + ups);
-						core.setFps(fps);
-
-						fps = 0;
-						ups = 0;
-					}
-
 
 				}
 
@@ -106,6 +101,21 @@ public class CoreThread extends Thread {
 				}
 			}	// end finally
 		}
+	}
+
+	@Override
+	public void update(double delta) {
+		core.update(delta);
+	}
+
+	@Override
+	public void render() {
+		core.draw(canvas);
+	}
+
+	@Override
+	public void setFps(int fps) {
+		core.setFps(fps);	
 	}
 
 }
